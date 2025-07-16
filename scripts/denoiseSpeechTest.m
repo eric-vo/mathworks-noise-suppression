@@ -68,13 +68,13 @@ audiowrite('data/test/simpleTest/testOutput/denoisedSpeech.wav', denoisedAudio, 
 sound(denoisedAudio, fs);
 %%
 % Calculate error metrics (add this after your denoising process)
-errorMetrics = calculateAudioError(cleanAudio, denoisedAudio); %[output:1fd4a36b]
+errorMetrics = calculateAudioError(cleanAudio, denoisedAudio); %[output:41a3b51c]
 
 %[appendix]{"version":"1.0"}
 %---
 %[metadata:view]
-%   data: {"layout":"onright","rightPanelPercent":37.8}
+%   data: {"layout":"onright","rightPanelPercent":39.1}
 %---
-%[output:1fd4a36b]
-%   data: {"dataType":"error","outputData":{"errorType":"runtime","text":"Unrecognized function or variable 'calculateAudioError'."}}
+%[output:41a3b51c]
+%   data: {"dataType":"text","outputData":{"text":"=== Audio Error Metrics ===\nRMSE: 0.090217\nMSE: 0.008139\nSNR: 3.32 dB\nNRMSE: 0.682081\nPSNR: 20.76 dB\nMAE: 0.070472\nCorrelation: 0.797161\n","truncated":false}}
 %---
