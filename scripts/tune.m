@@ -1,9 +1,6 @@
-% Load Pretrained Model and Stats
-downloadFolder = matlab.internal.examples.downloadSupportFile("audio/examples","sefc.zip");
-dataFolder = tempdir;
-unzip(downloadFolder, dataFolder);
-s = load(fullfile(dataFolder,"denoiseNetFullyConnected.mat"));
-net = s.denoiseNetFullyConnected;
+% Load Previous Model and Stats
+s = load("denoiseNet_FineTuned_VBD.mat");
+net = s.netFineTuned;
 noisyMean = s.noisyMean;
 noisyStd = s.noisyStd;
 cleanMean = s.cleanMean;
@@ -55,8 +52,8 @@ function [X, Y] = createTrainingPair(noisyPath, cleanPath, noisyMean, noisyStd, 
 end
 %%
 % Load and Prepare VoiceBank-DEMAND Files
-cleanDir = 'dataset/clean_trainset_wav';
-noisyDir = 'dataset/noisy_trainset_wav';
+cleanDir = 'data/train/clean_trainset_wav';
+noisyDir = 'data/train/noisy_trainset_wav';
 fileList = dir(fullfile(noisyDir, '*.wav'));
 
 XTrain = {};
@@ -94,7 +91,7 @@ options = trainingOptions('adam', ...
 netFineTuned = trainNetwork(X, Y, layers, options); %[output:0b775e48] %[output:44dbf5d2]
 %%
 % Save Model
-save('denoiseNet_FineTuned_VBD.mat', 'netFineTuned', 'noisyMean', 'noisyStd', 'cleanMean', 'cleanStd');
+save('models/denoiseNet_FineTuned_2_VBD.mat', 'netFineTuned', 'noisyMean', 'noisyStd', 'cleanMean', 'cleanStd');
 
 %[appendix]{"version":"1.0"}
 %---

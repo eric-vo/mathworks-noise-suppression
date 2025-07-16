@@ -1,9 +1,11 @@
-% Load a noisy speech audio file
-[noisyAudio, fs] = audioread("eric/noisyAudio.wav");
-soundsc(noisyAudio)
-%%
 [cleanAudio, ~] = audioread("SpeechDFT-16-8-mono-5secs.wav");
 soundsc(cleanAudio)
+pause(5)
+%%
+% Load a noisy speech audio file
+[noisyAudio, fs] = audioread("data/test/simpleTest/noisyAudio.wav");
+soundsc(noisyAudio)
+pause(5)
 %%
 % Convert to mono if needed
 if size(noisyAudio,2) > 1
@@ -19,12 +21,13 @@ if fs ~= targetFs
     fs = targetFs;
 end
 %%
-% Load a pre-trained denoising network (fully connected)
-downloadFolder = matlab.internal.examples.downloadSupportFile("audio/examples","sefc.zip");
-dataFolder = tempdir;
-unzip(downloadFolder, dataFolder);
-s = load(fullfile(dataFolder,"denoiseNetFullyConnected.mat"));
-denoiseNet = s.denoiseNetFullyConnected;
+% Load a denoising network
+
+% s = load("models/denoiseNetFullyConnected.mat");
+% denoiseNet = s.denoiseNetFullyConnected; % For original pre-trained model
+
+s = load("models/denoiseNet_FineTuned_VBD.mat");
+denoiseNet = s.netFineTuned; % For fine-tuned model
 noisyMean = s.noisyMean;
 noisyStd = s.noisyStd;
 cleanMean = s.cleanMean;
@@ -34,10 +37,9 @@ cleanStd = s.cleanStd;
 win = hamming(256,"periodic");
 overlap = round(0.75*256);
 fftLength = 256;
-numFeatures = fftLength/2 + 1; % ADD THIS LINE
-noisySTFT = stft(noisyAudio, Window=win, OverlapLength=overlap, fftLength=fftLength);
+numFeatures = fftLength/2 + 1;
 
-% FIXED: Correct frequency range indexing
+noisySTFT = stft(noisyAudio, Window=win, OverlapLength=overlap, fftLength=fftLength);
 noisyPhase = angle(noisySTFT(numFeatures-1:end,:)); % Changed from 1:129
 noisySTFT = abs(noisySTFT(numFeatures-1:end,:)); % Changed from 1:129
 
@@ -53,10 +55,8 @@ end
 predictors(:) = (predictors(:) - noisyMean) / noisyStd;
 predictors = reshape(predictors, [129, numSegments, 1, size(predictors,3)]);
 
-% Denoise using the pre-trained network
+% Denoise using the network
 STFTDenoised = predict(denoiseNet, predictors);
-
-% FIXED: Rescale and reconstruct time-domain signal
 STFTDenoised(:) = cleanStd * STFTDenoised(:) + cleanMean;
 STFTDenoised = STFTDenoised.'; % Transpose to match phase dimensions
 STFTDenoised = STFTDenoised.*exp(1j*noisyPhase);
@@ -64,20 +64,17 @@ STFTDenoised = [conj(STFTDenoised(end-1:-1:2,:)); STFTDenoised];
 denoisedAudio = istft(STFTDenoised, Window=win, OverlapLength=overlap, fftLength=fftLength, ConjugateSymmetric=true);
 %%
 % Save or play the result
-audiowrite('denoisedSpeech.wav', denoisedAudio, fs); %[output:0f400637]
+audiowrite('data/test/simpleTest/testOutput/denoisedSpeech.wav', denoisedAudio, fs);
 sound(denoisedAudio, fs);
 %%
 % Calculate error metrics (add this after your denoising process)
-errorMetrics = calculateAudioError(cleanAudio, denoisedAudio); %[output:5ad65f10]
+errorMetrics = calculateAudioError(cleanAudio, denoisedAudio); %[output:1fd4a36b]
 
 %[appendix]{"version":"1.0"}
 %---
 %[metadata:view]
 %   data: {"layout":"onright","rightPanelPercent":37.8}
 %---
-%[output:0f400637]
-%   data: {"dataType":"warning","outputData":{"text":"Warning: Data clipped when writing file."}}
-%---
-%[output:5ad65f10]
+%[output:1fd4a36b]
 %   data: {"dataType":"error","outputData":{"errorType":"runtime","text":"Unrecognized function or variable 'calculateAudioError'."}}
 %---
