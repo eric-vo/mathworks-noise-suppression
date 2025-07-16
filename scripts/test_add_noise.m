@@ -1,7 +1,7 @@
 % test_add_noise.m
 
 % Set SNR value
-snr_dB = 5;
+snr_dB = 10;
 
 % Define input folders
 clean_folder = '../data/test/gabrielSamples/clean/';
