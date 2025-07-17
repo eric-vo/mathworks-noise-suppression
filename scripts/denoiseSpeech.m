@@ -1,4 +1,5 @@
-% This file will eventually hold 2 functions (One function to process one file, another function to process an entire directory)
+% This file has 2 functions: One function to process one file, another function to process an entire directory
+
 function denoisedAudio = denoiseSpeechFile(noisyInput, outputDir)
     % Load a noisy speech audio file
     [noisyAudio, fs] = audioread(noisyInput);
@@ -62,25 +63,38 @@ function denoisedAudio = denoiseSpeechFile(noisyInput, outputDir)
     denoisedAudio = istft(STFTDenoised, Window=win, OverlapLength=overlap, fftLength=fftLength, ConjugateSymmetric=true);
     
     % Save or play the result
-    audiowrite(outputDir + "/denoisedSpeech.wav", denoisedAudio, fs);
+    [~, name, ~] = fileparts(noisyInput);
+    outputName = strcat(name, '_dn.wav');
+    outputPath = fullfile(outputDir, outputName);
+    audiowrite(outputPath, denoisedAudio, fs);
     % sound(denoisedAudio, fs);
 end
 %%
-denoisedAudio = denoiseSpeechFile("data/test/simpleTest/noisyAudio.wav", "data/test/simpleTest/testOutput"); % will be moved to main.m in future
+
+function denoisedAudioArray = denoiseSpeechDir(noisyInputDir, outputDir)
+    fileList = dir(fullfile(noisyInputDir, '*.wav'));
+    numFiles = length(fileList);
+    denoisedAudioArray = cell(1, numFiles);
+    for i = 1:numFiles
+        inputFile = fullfile(noisyInputDir, fileList(i).name);
+        denoisedAudioArray{i} = denoiseSpeechFile(inputFile, outputDir);
+    end
+end
+%%
+% denoisedAudio = denoiseSpeechFile("data/test/simpleTest/noisyAudio.wav", "data/test/simpleTest/testOutput"); % will be moved to main.m in future
 %%
 % This block should be done in main.m
-[cleanAudio, ~] = audioread("SpeechDFT-16-8-mono-5secs.wav");
-soundsc(cleanAudio)
-pause(5)
+% [cleanAudio, ~] = audioread("SpeechDFT-16-8-mono-5secs.wav");
+% soundsc(cleanAudio)
+% pause(5)
 
 % Calculate error metrics
-errorMetrics = calculateAudioError(cleanAudio, denoisedAudio); % should be done in main.m file %[output:97d990ac]
+% errorMetrics = calculateAudioError(cleanAudio, denoisedAudio); % should be done in main.m file
+%%
+denoisedAudioArray = denoiseSpeechDir("data/test/simpleTest/noisyInput", "data/test/simpleTest/testOutput");
 
 %[appendix]{"version":"1.0"}
 %---
 %[metadata:view]
-%   data: {"layout":"onright","rightPanelPercent":30.6}
-%---
-%[output:97d990ac]
-%   data: {"dataType":"text","outputData":{"text":"=== Audio Error Metrics ===\nRMSE: 0.090217\nMSE: 0.008139\nSNR: 3.32 dB\nNRMSE: 0.682081\nPSNR: 20.76 dB\nMAE: 0.070472\nCorrelation: 0.797161\n","truncated":false}}
+%   data: {"layout":"onright","rightPanelPercent":42.9}
 %---

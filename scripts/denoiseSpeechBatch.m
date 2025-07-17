@@ -1,3 +1,6 @@
+% REPLACED BY denoiseSpeechDir() IN denoiseSpeech.m
+% DELETE AFTER PROPER TESTING OF REPLACEMENT
+
 inputDir = "data/test/gabrielSamples/noisy";
 outputDir = "data/test/gabrielSamples/output_wav";
 %%
@@ -82,7 +85,7 @@ disp("All files denoised and saved."); %[output:39e86cea]
 %[appendix]{"version":"1.0"}
 %---
 %[metadata:view]
-%   data: {"layout":"onright","rightPanelPercent":33.7}
+%   data: {"layout":"onright","rightPanelPercent":9.9}
 %---
 %[output:83407ad3]
 %   data: {"dataType":"text","outputData":{"text":"Changed sample rate from 48000 to 8000\n","truncated":false}}
