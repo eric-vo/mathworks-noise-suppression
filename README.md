@@ -27,7 +27,7 @@ This project fine-tunes and analyzes a deep learning model for speech noise supp
 Due to time and hardware restrictions, we elected to fine-tune a pre-trained model rather than designing our own model from scratch
 
 ## Results
-On our custom testing set, we were able to achieve a correlation between the clean and denoised audio files of 0.9659
+On our custom testing set, we were able to achieve a correlation between the clean and denoised audio files of 0.9659.
 
 ## Model and Features
 We started using a pre-trained model from MATLAB's [Denoise Speech Using Deep Learning Networks Example](https://www.mathworks.com/help/audio/ug/denoise-speech-using-deep-learning-networks.html). <br>
