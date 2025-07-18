@@ -22,7 +22,7 @@ function [correlations, avgCorr] = calculateCorrelationBatch(denoisedAudioArray,
             fprintf('Processing clean file %d, denoised version %d\n', i, j);
     
             % Read and denoise
-            denoisedAudio = denoisedAudioArray((i - 1) * 10 + j);
+            denoisedAudio = denoisedAudioArray{(i - 1) * 10 + j};
             if size(denoisedAudio, 2) > 1
                 denoisedAudio = mean(denoisedAudio, 2);
             end
