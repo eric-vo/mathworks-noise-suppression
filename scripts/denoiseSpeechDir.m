@@ -1,5 +1,15 @@
 % This file has 2 functions: One function to process one file, another function to process an entire directory
-
+%%
+function denoisedAudioArray = denoiseSpeechDir(noisyInputDir, outputDir)
+    fileList = dir(fullfile(noisyInputDir, '*.wav'));
+    numFiles = length(fileList);
+    denoisedAudioArray = cell(1, numFiles);
+    for i = 1:numFiles
+        inputFile = fullfile(noisyInputDir, fileList(i).name);
+        denoisedAudioArray{i} = denoiseSpeechFile(inputFile, outputDir);
+    end
+end
+%%
 function denoisedAudio = denoiseSpeechFile(noisyInput, outputDir)
     % Load a noisy speech audio file
     [noisyAudio, fs] = audioread(noisyInput);
@@ -69,32 +79,6 @@ function denoisedAudio = denoiseSpeechFile(noisyInput, outputDir)
     audiowrite(outputPath, denoisedAudio, fs);
     % sound(denoisedAudio, fs);
 end
-%%
-
-function denoisedAudioArray = denoiseSpeechDir(noisyInputDir, outputDir)
-    fileList = dir(fullfile(noisyInputDir, '*.wav'));
-    numFiles = length(fileList);
-    denoisedAudioArray = cell(1, numFiles);
-    for i = 1:numFiles
-        inputFile = fullfile(noisyInputDir, fileList(i).name);
-        denoisedAudioArray{i} = denoiseSpeechFile(inputFile, outputDir);
-    end
-end
-%%
-% denoisedAudio = denoiseSpeechFile("data/test/simpleTest/noisyAudio.wav", "data/test/simpleTest/testOutput"); % will be moved to main.m in future
-%%
-% This block should be done in main.m
-% [cleanAudio, ~] = audioread("SpeechDFT-16-8-mono-5secs.wav");
-% soundsc(cleanAudio)
-% pause(5)
-
-% Calculate error metrics
-% errorMetrics = calculateAudioError(cleanAudio, denoisedAudio); % should be done in main.m file
-%%
-denoisedAudioArray = denoiseSpeechDir("data/test/simpleTest/noisyInput", "data/test/simpleTest/testOutput");
 
 %[appendix]{"version":"1.0"}
-%---
-%[metadata:view]
-%   data: {"layout":"onright","rightPanelPercent":42.9}
 %---
