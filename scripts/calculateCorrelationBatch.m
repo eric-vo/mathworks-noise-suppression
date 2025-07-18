@@ -1,6 +1,11 @@
-function [correlations, avgCorr] = calculateCorrelationBatch(denoisedAudioArray, cleanOriginalDir)
-    numDenoised = 10;
-    numClean = 10;
+function [correlations, avgCorr] = calculateCorrelationBatch(denoisedAudioArray, cleanOriginalDir, numDenoised, numClean)
+    arguments
+        denoisedAudioArray
+        cleanOriginalDir
+        numDenoised = 1
+        numClean = 1
+    end
+    
     targetFs = 8000;
 
     % Get all .wav files from the cleanOriginalDir
