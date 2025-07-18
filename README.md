@@ -31,7 +31,7 @@ On our custom testing set, we were able to achieve an average correlation betwee
 
 ## Model and Features
 We started using a pre-trained model from MATLAB's [Denoise Speech Using Deep Learning Networks Example](https://www.mathworks.com/help/audio/ug/denoise-speech-using-deep-learning-networks.html). <br>
-Then we fine-tuned this model using the test sets from the [VoiceBank-Demand (VBD) Dataset](https://datashare.ed.ac.uk/handle/10283/1942) 
+Then we fine-tuned the model using the test sets from the [VoiceBank-Demand (VBD) Dataset](https://datashare.ed.ac.uk/handle/10283/1942).
 
 Preprocessing: STFT with Hamming windows <br>
 Feature Context: 8-segment context windows <br>
