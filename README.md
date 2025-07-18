@@ -56,7 +56,7 @@ This script demonstrates all of the different functions that we developed throug
 - **generateNoisyFile(cleanInputFile, noisyOutputDir):** Adds noise to a single clean audio file
 - **denoiseSpeechFile(noisyInputFile, denoisedOutputDir):** Denoises a single noisy file
 - **calculateAudioError(cleanAudio, denoisedAudio):** Calculates several error metrics comparing the model's denoised audio and the original clean audio
-- **resample(inputDir, outputDir, targetFs):** Resamples the specified directory of audio files to the desired target frequency (used for subjective evaluation)
+- **resampleDir(inputDir, outputDir, targetFs):** Resamples the specified directory of audio files to the desired target frequency (used for subjective evaluation)
 
 
 ### Subjective Evaluation of Denoised Files
