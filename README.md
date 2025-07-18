@@ -48,7 +48,7 @@ Signal Processing Toolbox <br>
 ### main.m
 This script demonstrates all of the different functions that we developed throughout this project:
 - **train(model, cleanDir, noisyDir, outputDir):** Takes a pre-trained model and fine-tunes it given a set of clean and noisy audio file pairs
-- **generateNoisyDir(cleanInputDir, noisyOutputDir):** Generates 10 noisy audio files for every clean audio file
+- **generateNoisyDir(cleanInputDir, noisyOutputDir):** Generates 5 noisy audio files for every clean audio file
 - **denoiseSpeechDir(noisyInputDir, denoisedOutputDir):** Denoises directory of noisy audio files
 - **calculateCorrelationDir(denoisedAudioArray, originalCleanDir, *numDenoised = 1*, *numClean = 1*):** Calculates the average correlation for a set of clean and noisy audio file pairs
 
