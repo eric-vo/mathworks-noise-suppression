@@ -5,7 +5,7 @@ denoisedOutputDir = "data/test/gabrielSamples/output_wav";
 %%
 denoisedAudioArray = denoiseSpeechDir(noisyInputDir, denoisedOutputDir);
 
-% GOAL: errorMetrics = calculateAvgCorrelation(denoisedAudioArray, cleanOriginalDir)
+[correlations, avgCorr] = calculateCoorelationBatch(denoisedAudioArray, cleanOriginalDir)
 
 % This may be a lot easier if we reformat our clean/noisy directories to
 % be in pairs, rather than a 1:10 ratio of clean:noisy files (so that the
