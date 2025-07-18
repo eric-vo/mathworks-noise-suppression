@@ -1,5 +1,7 @@
 %% mathworks-noise-suppression
 
+[![Open in MATLAB Online](https://www.mathworks.com/images/responsive/global/open-in-matlab-online.svg)](https://matlab.mathworks.com/open/github/v1?repo=eric-vo/mathworks-noise-suppression&file=scripts/main.m)
+
 %% calculateAudioError Script
 
 function errorMetrics = calculateAudioError(cleanAudio, denoisedAudio)
