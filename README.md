@@ -1,83 +1,63 @@
-## Speech Noise Suppression with Deep Learning in MATLAB
-
+# Speech Noise Suppression with Deep Learning in MATLAB
+## by Eric Vo, Kailash Rao, Siwoo Chung, Gabriel Ramos
 [![Open in MATLAB Online](https://www.mathworks.com/images/responsive/global/open-in-matlab-online.svg)](https://matlab.mathworks.com/open/github/v1?repo=eric-vo/mathworks-noise-suppression&file=scripts/main.m)
 
 ## Overview
-This project trains and analyzes a deep learning model for speech noise suppression using MATLAB, Audio Toolbox, and Deep Learning Toolbox. The main goal was to develop a denoising system that improved speech quality in noisy environments and evaluate its effectiveness using both subjective (human opinionated hearing) and objective (quantitative) methods.
+This project fine-tunes and analyzes a deep learning model for speech noise suppression using MATLAB, Audio Toolbox, and Deep Learning Toolbox. The main goal was to develop a denoising system that improved speech quality in noisy environments and evaluate its effectiveness using both subjective (human opinionated hearing) and objective (quantitative) methods.
 
-## Objectives
-Conducted a literature review on deep learning-based speech noise suppression using MATLAB resources, as well as other open-source resources.
-Downloaded and prepared speech/noise datasets following the Microsoft DNS Challenge.
-Designed and trained a deep learning denoising network by use of MATLAB.
-Applied short-time Fourier transform (STFT) signal processing techniques to prep data for training and inference.
-Evaluated the performance by using:
-Subjective listening tests
-Objective metrics
+#### Run main.m to:
+- Train the model
+- Noise custom data samples
+- Test the model on the custom samples
+- See the average correlation between the clean files and the denoised files
 
-## Model and Feature Stuff
-Model Type: Fine-tuned neural network (denoiseNet_FineTuned_VBD)
-Preprocessing: STFT with Hamming windows
-Feature Context: 8-segment context windows
-Sampling Rate: 8 kHz
+## Project Steps
+### Time Frame: 6/27/2025 - 7/18/2025 (3 weeks)
+- Conducted a literature review on deep learning-based speech noise suppression using MATLAB resources, as well as other open-source resources. <br>
+- Downloaded and prepared speech/noise datasets from the [Denoise Speech Using Deep Learning Networks Example](https://www.mathworks.com/help/audio/ug/denoise-speech-using-deep-learning-networks.html)
+- Prepared our own sample data
+- Fine-tuned a deep learning denoising network using MATLAB <br>
+- Applied short-time Fourier transform (STFT) signal processing techniques to prep data for training and inference <br>
+- Evaluated the performance by using:
+    - Subjective listening tests
+        - rating the clarity of speech on a scale from 1 (unintelligble) to 5 (very clear)
+    - Objective metrics
+        - correlation, RMSE, MSE, SNR, etc
 
-##  Project Structure
+Due to time and hardware restrictions, we elected to fine-tune a pre-trained model rather than designing our own model from scratch
 
-```
-📁 data/
-└── test/
-    └── simpleTest/
-        ├── noisyInput/
-        └── testOutput/
+## Results
+On our custom testing set, we were able to achieve a correlation between the clean and denoised audio files of 0.9659
 
-📁 models/
-└── denoiseNet_FineTuned_VBD.mat
+## Model and Features
+We started using a pre-trained model from MATLAB's [Denoise Speech Using Deep Learning Networks Example](https://www.mathworks.com/help/audio/ug/denoise-speech-using-deep-learning-networks.html). <br>
+Then we fine tuned this model using the test sets from the [VoiceBank-Demand (VBD) Dataset](https://datashare.ed.ac.uk/handle/10283/1942) 
 
-📄 calculateAudioError.m
-📄 calculateCorrelationBatch.m
-📄 denoiseSpeechBatch.m
-```
+Preprocessing: STFT with Hamming windows <br>
+Feature Context: 8-segment context windows <br>
+Sampling Rate: 8 kHz <br>
 
+### Dependencies
+MATLAB R2025a or later <br>
+Audio Toolbox <br>
+Deep Learning Toolbox <br>
+Signal Processing Toolbox <br>
 
 ## Scripts
 
-# calculateAudioError.m
-Calculated best performance metrics from between the clean and denoised audio signals:
-RMSE
-MSE
-SNR (dB)
-PSNR (dB)
-MAE
-NRMSE
-Correlation coefficient
+### main.m
+This script demonstrates all of the different functions that we developed throughout this project:
+- **train(model, cleanDir, noisyDir, outputDir):** Takes a pre-trained model and fine-tunes it given a set of clean and noisy audio file pairs
+- **generateNoisyDir(cleanInputDir, noisyOutputDir):** Generates 10 noisy audio files for every clean audio file
+- **denoiseSpeechDir(noisyInputDir, denoisedOutputDir):** Denoises directory of noisy audio files
+- **calculateCorrelationDir(denoisedAudioArray, originalCleanDir, *numDenoised = 1*, *numClean = 1*):** Calculates the average correlation for a set of clean and noisy audio file pairs
 
-# calculateCorrelationBatch.m
-Processed a batch of denoised signals and compared them to the clean signals by use of correlation. 
-To do this, it:
-Looped through 10 clean files and 10 denoised variations
-Used calculateAudioError for metric computation
-Outputted a correlation matrix and average correlation
+### Helper Functions
+- **generateNoisyFile(cleanInputFile, noisyOutputDir):** Adds noise to a single clean audio file
+- **denoiseSpeechFile(noisyInputFile, denoisedOutputDir):** Denoises a single noisy file
+- **calculateAduioError(cleanAudio, denoisedAudio):** Calculates several error metrics comparing the model's denoised audio and the original clean audio
+- **resample(inputDir, outputDir, targetFs):** Resamples sepcified directory of audio files to desired target frequency (used for subjective evaluation)
 
-# denoiseSpeechBatch.m
-Included two key functions:
-denoiseSpeechFile: Processed one file through STFT, network inference, and ISTFT
-denoiseSpeechDir: Processed all .wav files in a directory
-Outputs denoised .wav files to a specific directory.
-
-## Evaluation Example
-denoisedAudioArray = denoiseSpeechDir("data/test/simpleTest/noisyInput", "data/test/simpleTest/testOutput");
-
-[correlations, avgCorr] = calculateCorrelationBatch(denoisedAudioArray, "data/test/simpleTest/clean");
-
-disp(['Average Correlation: ', num2str(avgCorr)]);
-
-## Dependencies
-MATLAB R2023a or later
-Audio Toolbox
-Deep Learning Toolbox
-Signal Processing Toolbox
-
-## Sample Output
-Denoised files are saved with _dn.wav suffix in the testOutput directory. They can be audibly listened to for comparison to their quality against the clean originals.
 
 ### Subjective Evaluation of Denoised Files
 We evaluated the clarity of denoised files (in relation to their corresponding noisy files) on a scale from 1 to 5: 1 representing the worst clarity, and 5 representing the best possible clarity. Here are evaluations of some test files (within `data/test/gabrielSamples/output_wav`):
@@ -91,28 +71,3 @@ We evaluated the clarity of denoised files (in relation to their corresponding n
 **10_cafe_5db_dn.wav:** 2.8
 
 **10_birds_farm_5db_dn.wav:** 3.2
-
-
-## License
-
-This project is for academic and non-commercial use only. 
-
-MIT License
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
