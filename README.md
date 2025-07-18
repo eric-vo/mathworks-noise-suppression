@@ -3,14 +3,14 @@
 [![Open in MATLAB Online](https://www.mathworks.com/images/responsive/global/open-in-matlab-online.svg)](https://matlab.mathworks.com/open/github/v1?repo=eric-vo/mathworks-noise-suppression&file=scripts/main.m)
 
 ## Overview
-This project shows how to train and analyze a deep learning model for speech noise suppression with the use of MATLAB, "Audio Toolbox", and "Deep Learning Toolbox". The main goal was to develop a denoising system for which improved speech quality in noisy environments. Also to evaluate the effectiveness with the use of both subjective (our own weird human opinionated hearing) and objective (actual quantitative metrics) methods.
+This project trains and analyzes a deep learning model for speech noise suppression using MATLAB, Audio Toolbox, and Deep Learning Toolbox. The main goal was to develop a denoising system that improved speech quality in noisy environments and evaluate its effectiveness using both subjective (human opinionated hearing) and objective (quantitative) methods.
 
 ## Objectives
-Conducted a literature review on deep learning-based speech noise suppression using MATLAB resources, as well as other open source resources.
+Conducted a literature review on deep learning-based speech noise suppression using MATLAB resources, as well as other open-source resources.
 Downloaded and prepared speech/noise datasets following the Microsoft DNS Challenge.
 Designed and trained a deep learning denoising network by use of MATLAB.
 Applied STFT signal processing techniques to prep data for training and inference.
-Evaluated the performance by use of:
+Evaluated the performance by using:
 Subjective listening tests
 Objective metrics
 
@@ -55,7 +55,7 @@ Processed a batch of denoised signals and compared them to the clean signals by 
 To do this, it:
 Looped through 10 clean files and 10 denoised variations
 Used calculateAudioError for metric computation
-Outputed a correlation matrix and average correlation
+Outputted a correlation matrix and average correlation
 
 # denoiseSpeechBatch.m
 Included two key functions:
@@ -77,7 +77,7 @@ Deep Learning Toolbox
 Signal Processing Toolbox
 
 ## Sample Output
-Denoised files are saved with _dn.wav suffix in the testOutput directory. They are able to be audibly listened to for comparison to their quality against the clean originals.
+Denoised files are saved with _dn.wav suffix in the testOutput directory. They can be audibly listened to for comparison to their quality against the clean originals.
 
 ### Subjective Evaluation of Denoised Files
 We evaluated the clarity of denoised files (in relation to their corresponding noisy files) on a scale from 1 to 5: 1 representing the worst clarity, and 5 representing the best possible clarity. Here are evaluations of some test files:
@@ -91,7 +91,7 @@ We evaluated the clarity of denoised files (in relation to their corresponding n
 
 ## License
 
-This project was just for academic and non-commercial use only. 
+This project is for academic and non-commercial use only. 
 
 MIT License
 
