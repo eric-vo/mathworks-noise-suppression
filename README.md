@@ -2,6 +2,8 @@
 ## by Eric Vo, Kailash Rao, Siwoo Chung, Gabriel Ramos
 [![Open in MATLAB Online](https://www.mathworks.com/images/responsive/global/open-in-matlab-online.svg)](https://matlab.mathworks.com/open/github/v1?repo=eric-vo/mathworks-noise-suppression&file=scripts/main.m)
 
+#### Demo: https://www.youtube.com/watch?v=eTR514DVRlk
+
 ## Overview
 This project fine-tunes and analyzes a deep learning model for speech noise suppression using MATLAB, Audio Toolbox, and Deep Learning Toolbox. The main goal was to develop a denoising system that improved speech quality in noisy environments and evaluate its effectiveness using both subjective (human opinionated hearing) and objective (quantitative) methods.
 
