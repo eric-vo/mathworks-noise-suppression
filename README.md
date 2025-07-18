@@ -9,7 +9,7 @@ This project trains and analyzes a deep learning model for speech noise suppress
 Conducted a literature review on deep learning-based speech noise suppression using MATLAB resources, as well as other open-source resources.
 Downloaded and prepared speech/noise datasets following the Microsoft DNS Challenge.
 Designed and trained a deep learning denoising network by use of MATLAB.
-Applied STFT signal processing techniques to prep data for training and inference.
+Applied short-time Fourier transform (STFT) signal processing techniques to prep data for training and inference.
 Evaluated the performance by using:
 Subjective listening tests
 Objective metrics
