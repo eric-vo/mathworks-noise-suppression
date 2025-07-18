@@ -1,4 +1,4 @@
-function [correlations, avgCorr] = calculateCorrelationBatch(denoisedAudioArray, cleanOriginalDir, numDenoised, numClean)
+function [correlations, avgCorr] = calculateCorrelationDir(denoisedAudioArray, cleanOriginalDir, numDenoised, numClean)
     arguments
         denoisedAudioArray
         cleanOriginalDir
@@ -14,8 +14,8 @@ function [correlations, avgCorr] = calculateCorrelationBatch(denoisedAudioArray,
     % Extract numeric part of each filename (e.g., "10.wav" → 10)
     fileNums = arrayfun(@(f) sscanf(f.name, '%d'), fileList);
 
-    % Sort files by numeric part in descending order
-    [~, sortIdx] = sort(fileNums, 'descend');
+    % Sort files by numeric part in ascending order
+    [~, sortIdx] = sort(fileNums, 'ascend');
     sortedFiles = fileList(sortIdx);
     sortedNums = fileNums(sortIdx);
 
