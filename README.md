@@ -82,11 +82,15 @@ Denoised files are saved with _dn.wav suffix in the testOutput directory. They c
 ### Subjective Evaluation of Denoised Files
 We evaluated the clarity of denoised files (in relation to their corresponding noisy files) on a scale from 1 to 5: 1 representing the worst clarity, and 5 representing the best possible clarity. Here are evaluations of some test files:
 
-10_waves_10dB_dn.wav: 3.5
-10_pencils_10dB_dn.wav: 3.2
-10_jet_city_birds_5db_dn.wav: 3.0
-10_cafe_5db_dn.wav: 2.8
-10_birds_farm_5db_dn.wav: 3.2
+**10_waves_10dB_dn.wav:** 3.5
+
+**10_pencils_10dB_dn.wav:** 3.2
+
+**10_jet_city_birds_5db_dn.wav:** 3.0
+
+**10_cafe_5db_dn.wav:** 2.8
+
+**10_birds_farm_5db_dn.wav:** 3.2
 
 
 ## License
