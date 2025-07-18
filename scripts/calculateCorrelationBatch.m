@@ -1,48 +1,65 @@
 function [correlations, avgCorr] = calculateCorrelationBatch(denoisedAudioArray, cleanOriginalDir)
-    numClean = 10;
     numDenoised = 10;
-    
+    numClean = 10;
     targetFs = 8000;
-    
+
+    % Get all .wav files from the cleanOriginalDir
+    fileList = dir(fullfile(cleanOriginalDir, '*.wav'));
+
+    % Extract numeric part of each filename (e.g., "10.wav" → 10)
+    fileNums = arrayfun(@(f) sscanf(f.name, '%d'), fileList);
+
+    % Sort files by numeric part in descending order
+    [~, sortIdx] = sort(fileNums, 'descend');
+    sortedFiles = fileList(sortIdx);
+    sortedNums = fileNums(sortIdx);
+
     % Prepare output matrix
     correlations = zeros(numClean, numDenoised);
-    
-    % Loop over clean files
+
+    % Loop over sorted clean files
     for i = 1:numClean
-        cleanFile = fullfile(cleanOriginalDir, sprintf('%d.wav', i));
+        cleanFile = fullfile(cleanOriginalDir, sortedFiles(i).name);
         [cleanAudio, cleanFs] = audioread(cleanFile);
-    
-        % Resample if needed - Use 8 kHz
+
+        % Resample to targetFs if needed
         if cleanFs ~= targetFs
             cleanAudio = resample(cleanAudio, targetFs, cleanFs);
         end
-        
+
         for j = 1:numDenoised
-            % Print progress
-            fprintf('Processing clean file %d, denoised version %d\n', i, j);
-    
-            % Read and denoise
+            fprintf('Processing clean file %s, denoised version %d\n', sortedFiles(i).name, j);
+
+            % Get denoised audio from array
             denoisedAudio = denoisedAudioArray{(i - 1) * 10 + j};
+
+            % If stereo, convert to mono
             if size(denoisedAudio, 2) > 1
                 denoisedAudio = mean(denoisedAudio, 2);
             end
-    
+
+            % % Optional audio playback
+            % soundsc(cleanAudio)
+            % pause()
+            % soundsc(denoisedAudio)
+
             % Compute error metrics
             errorMetrics = calculateAudioError(cleanAudio, denoisedAudio);
-            correlations(i,j) = errorMetrics.Correlation;
-    
+            correlations(i, j) = errorMetrics.Correlation;
+
             fprintf('\n')
         end
     end
-    
+
+    % Print correlation values
     for i = 1:numClean
-        % Print correlation values for this clean file
-        fprintf('Correlation values for clean file %d: ', i);
-        fprintf('%.4f ', correlations(i,:));
+        cleanIndex = sortedNums(i);
+        fprintf('Correlation values for clean file %d: ', cleanIndex);
+        fprintf('%.4f ', correlations(cleanIndex, :));
         fprintf('\n');
     end
-    
-    % Print overall average correlation
+
+    % Compute and print average correlation
     avgCorr = mean(correlations(:));
     fprintf('Average correlation across all files: %.4f\n', avgCorr);
 end
