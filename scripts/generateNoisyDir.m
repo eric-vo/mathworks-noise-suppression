@@ -1,13 +1,10 @@
-function generateNoisyDir(clean_folder, noise_folder, output_folder)
+function generateNoisyDir(clean_folder, noise_folder, output_folder, snr_dB)
 % GENERATE_NOISY_DATASET
 % Adds noise to each clean audio file using every noise file
 % in the specified folders, saving the output to a target folder.
 %
 % This script loops through all clean and noise .wav files,
 % applies the desired SNR, and saves the resulting noisy audio.
-
-    % Desired Signal-to-Noise Ratio in dB
-    snr_dB = 10;
 
     % Get list of clean audio files
     clean_files = dir(fullfile(clean_folder, '*.wav'));

@@ -36,7 +36,7 @@ function [correlations, avgCorr] = calculateCorrelationDir(denoisedAudioArray, c
             fprintf('Processing clean file %s, denoised version %d\n', sortedFiles(i).name, j);
 
             % Get denoised audio from array
-            denoisedAudio = denoisedAudioArray{(i - 1) * 10 + j};
+            denoisedAudio = denoisedAudioArray{(i - 1) * numDenoised + j};
 
             % If stereo, convert to mono
             if size(denoisedAudio, 2) > 1
