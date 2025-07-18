@@ -7,9 +7,9 @@ This project fine-tunes and analyzes a deep learning model for speech noise supp
 
 #### Run main.m to (add scripts/ to your PATH first):
 - Load the fine-tuned model
-- Noise our custom data samples
-- Test the model on the custom noised samples
-- See the average correlation between the clean files and the denoised files
+- Noise our custom audio samples
+- Test the model on the custom noisy samples
+- See the individual and average correlation between the clean files and the denoised files
 
 ## Project Steps
 ### Time Frame: 6/27/2025 - 7/18/2025 (3 weeks)
@@ -20,18 +20,18 @@ This project fine-tunes and analyzes a deep learning model for speech noise supp
 - Applied short-time Fourier transform (STFT) signal processing techniques to prep data for training and inference <br>
 - Evaluated the performance by using:
     - Subjective listening tests
-        - rating the clarity of speech on a scale from 1 (unintelligble) to 5 (very clear)
+        - rating the clarity of speech on a scale from 1 (unintelligible) to 5 (very clear)
     - Objective metrics
         - correlation, RMSE, MSE, SNR, etc
 
-Due to time and hardware restrictions, we elected to fine-tune a pre-trained model rather than designing our own model from scratch
+Due to time and hardware restrictions, we elected to fine-tune a pre-trained model rather than design our own model from scratch.
 
 ## Results
 On our custom testing set, we were able to achieve a correlation between the clean and denoised audio files of 0.9659.
 
 ## Model and Features
 We started using a pre-trained model from MATLAB's [Denoise Speech Using Deep Learning Networks Example](https://www.mathworks.com/help/audio/ug/denoise-speech-using-deep-learning-networks.html). <br>
-Then we fine tuned this model using the test sets from the [VoiceBank-Demand (VBD) Dataset](https://datashare.ed.ac.uk/handle/10283/1942) 
+Then we fine-tuned this model using the test sets from the [VoiceBank-Demand (VBD) Dataset](https://datashare.ed.ac.uk/handle/10283/1942) 
 
 Preprocessing: STFT with Hamming windows <br>
 Feature Context: 8-segment context windows <br>
@@ -56,7 +56,7 @@ This script demonstrates all of the different functions that we developed throug
 - **generateNoisyFile(cleanInputFile, noisyOutputDir):** Adds noise to a single clean audio file
 - **denoiseSpeechFile(noisyInputFile, denoisedOutputDir):** Denoises a single noisy file
 - **calculateAudioError(cleanAudio, denoisedAudio):** Calculates several error metrics comparing the model's denoised audio and the original clean audio
-- **resample(inputDir, outputDir, targetFs):** Resamples sepcified directory of audio files to desired target frequency (used for subjective evaluation)
+- **resample(inputDir, outputDir, targetFs):** Resamples the specified directory of audio files to the desired target frequency (used for subjective evaluation)
 
 
 ### Subjective Evaluation of Denoised Files
