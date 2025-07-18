@@ -6,9 +6,9 @@
 This project fine-tunes and analyzes a deep learning model for speech noise suppression using MATLAB, Audio Toolbox, and Deep Learning Toolbox. The main goal was to develop a denoising system that improved speech quality in noisy environments and evaluate its effectiveness using both subjective (human opinionated hearing) and objective (quantitative) methods.
 
 #### Run main.m to:
-- Train the model
-- Noise custom data samples
-- Test the model on the custom samples
+- Load the fine-tuned model
+- Noise our custom data samples
+- Test the model on the custom noised samples
 - See the average correlation between the clean files and the denoised files
 
 ## Project Steps
