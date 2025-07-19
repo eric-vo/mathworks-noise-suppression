@@ -1,6 +1,6 @@
 # Speech Noise Suppression with Deep Learning in MATLAB
 ## by Eric Vo, Kailash Rao, Siwoo Chung, Gabriel Ramos
-[![Open in MATLAB Online](https://www.mathworks.com/images/responsive/global/open-in-matlab-online.svg)](https://matlab.mathworks.com/open/github/v1?repo=eric-vo/mathworks-noise-suppression&file=scripts/main.m)
+[![Open in MATLAB Online](https://www.mathworks.com/images/responsive/global/open-in-matlab-online.svg)](https://matlab.mathworks.com/open/github/v1?repo=eric-vo/mathworks-ai-challenge&file=scripts/main.m)
 
 #### Demo: https://www.youtube.com/watch?v=eTR514DVRlk
 
@@ -64,9 +64,9 @@ This script demonstrates all of the different functions that we developed throug
 ### Subjective Evaluation of Denoised Files
 We evaluated the clarity of denoised files (in relation to their corresponding noisy files) on a scale from 1 to 5: 1 representing the worst clarity, and 5 representing the best possible clarity. Here are evaluations of some test files (within `data/test/gabrielSamples/output_wav`):
 
-**10_waves_10dB_dn.wav:** 3.5
+**10_waves_5dB_dn.wav:** 3.7
 
-**10_pencils_10dB_dn.wav:** 3.2
+**10_pencils_5dB_dn.wav:** 3.2
 
 **10_jet_city_birds_5db_dn.wav:** 3.0
 
