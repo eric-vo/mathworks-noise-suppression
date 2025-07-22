@@ -1,4 +1,25 @@
 function denoisedAudio = denoiseSpeechFile(model, noisyInput, denoisedOutputDir)
+% denoiseSpeechFile  Applies a deep learning model to denoise a single noisy audio file.
+%
+%   denoisedAudio = denoiseSpeechFile(model, noisyInput, denoisedOutputDir)
+%
+%   This function loads a noisy speech audio file, preprocesses it with STFT,
+%   applies a pre-trained or fine-tuned denoising neural network, reconstructs
+%   the time-domain audio, and saves the denoised output.
+%
+%   Inputs:
+%       model              - Path to .mat file containing the pre-trained or fine-tuned model
+%       noisyInput         - Path to a single noisy .wav file
+%       denoisedOutputDir  - Path to directory where denoised output will be saved
+%
+%   Output:
+%       denoisedAudio      - Vector of denoised time-domain audio samples
+%
+%   Notes:
+%       - Assumes model contains: netFineTuned (or denoiseNetFullyConnected), noisyMean, noisyStd, cleanMean, cleanStd
+%       - Resamples audio to 8 kHz if necessary
+%       - Saves output as <original_filename>_dn.wav in the specified directory
+
     % Load a noisy speech audio file
     [noisyAudio, fs] = audioread(noisyInput);
     % soundsc(noisyAudio)
@@ -19,13 +40,10 @@ function denoisedAudio = denoiseSpeechFile(model, noisyInput, denoisedOutputDir)
     end
     
     % Load a denoising network
-    
     % s = load("models/denoiseNetFullyConnected.mat");
-   
-    
     s = load(model);
     [~, name, ~] = fileparts(model);
-    if name == "denoiseNetFullyConnected" 
+    if name == "denoiseNetFullyConnected"
          denoiseNet = s.denoiseNetFullyConnected; % For original pre-trained model
     else
         denoiseNet = s.netFineTuned; % For fine-tuned model
