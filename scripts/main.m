@@ -1,3 +1,10 @@
+% main.m - Main execution script for denoising evaluation pipeline
+% 
+% Steps:
+%   1. Generate noisy files using clean samples and noise sources
+%   2. Apply pre-trained denoising model
+%   3. Evaluate denoising performance using correlation metrics
+% 
 % Add noise to clean custom samples 
 cleanOriginalDir = "data/test/gabrielSamples/clean8Khz";
 noiseDir = "data/noise";
