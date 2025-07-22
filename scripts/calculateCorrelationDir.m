@@ -1,4 +1,26 @@
 function [correlations, avgCorr] = calculateCorrelationDir(denoisedAudioArray, cleanOriginalDir, numDenoised, numClean)
+% calculateCorrelationDir  Computes correlation metrics between clean and denoised audio files.
+%
+%   [correlations, avgCorr] = calculateCorrelationDir(denoisedAudioArray, cleanOriginalDir, numDenoised, numClean)
+%
+%   Compares each clean audio file in a directory against multiple versions of
+%   its denoised counterparts and calculates the correlation values.
+%
+%   Inputs:
+%       denoisedAudioArray - Cell array containing denoised audio signals
+%       cleanOriginalDir   - Directory containing clean .wav files
+%       numDenoised        - Number of denoised versions per clean file (default: 1)
+%       numClean           - Number of clean files to compare (default: 1)
+%
+%   Outputs:
+%       correlations        - Matrix of correlation values (size: numClean × numDenoised)
+%       avgCorr             - Scalar average of all correlation values
+%
+%   Notes:
+%       - Assumes filenames of clean files begin with a numeric index (e.g., "10.wav")
+%       - Calls calculateAudioError to compute the correlation metric
+%       - Assumes audio is sampled at or will be resampled to 8 kHz
+
     arguments
         denoisedAudioArray
         cleanOriginalDir
