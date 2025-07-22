@@ -1,14 +1,20 @@
 function noisyAudio = generateNoisyFile(clean_path, noise_path, output_path, snr_dB)
-% ADD_NOISE Adds noise to a clean audio file at a specific SNR (dB)
-% 
-% Receives:
-%   clean_path  - string, path to clean speech .wav file
-%   noise_path  - string, path to noise-only .wav file
-%   output_path - string, where to save the resulting noisy audio
-%   snr_dB      - numeric value, desired Signal-to-Noise Ratio in dB
+% generateNoisyFile  Adds background noise to a clean audio file at a specified SNR.
 %
-% Returns:
-%   noisy       - vector, resulting noisy audio signal
+%   noisyAudio = generateNoisyFile(clean_path, noise_path, output_path, snr_dB)
+%
+%   Loads a clean speech file and a noise file, scales the noise to achieve
+%   the desired Signal-to-Noise Ratio (SNR), mixes them, normalizes the result,
+%   and writes the noisy audio to the specified output path.
+%
+%   Inputs:
+%       clean_path   - String, path to clean speech .wav file
+%       noise_path   - String, path to noise-only .wav file
+%       output_path  - String, path to save the resulting noisy .wav file
+%       snr_dB       - Numeric value, desired SNR in decibels
+%
+%   Output:
+%       noisyAudio   - Vector, resulting noisy audio signal
 
     % Load audio files
     [clean, fs1] = audioread(clean_path);
@@ -45,14 +51,14 @@ function noisyAudio = generateNoisyFile(clean_path, noise_path, output_path, snr
     noise_scaled = noise * scale;
 
     % Add noise to clean signal
-    noisy = clean + noise_scaled;
+    noisyAudio = clean + noise_scaled;
 
     % Normalize output to avoid clipping
-    max_val = max(abs(noisy));
+    max_val = max(abs(noisyAudio));
     if max_val > 1
-        noisy = noisy / max_val;
+        noisyAudio = noisyAudio / max_val;
     end
 
     % Save result
-    audiowrite(output_path, noisy, fs1);
+    audiowrite(output_path, noisyAudio, fs1);
 end
