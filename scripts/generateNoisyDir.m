@@ -1,11 +1,27 @@
 function generateNoisyDir(cleanInputDir, noiseDir, noisedOutputDir, options)
-% GENERATE NOISY DIR
-% Adds noise to each clean audio file using every noise file
-% in the specified folders, saving the output to a target folder.
+% generateNoisyDir  Adds noise to each clean audio file using every noise file.
 %
-% This script loops through all clean and noise .wav files,
-% applies the desired SNR, and saves the resulting noisy audio.
-    
+%   generateNoisyDir(cleanInputDir, noiseDir, noisedOutputDir, options)
+%
+%   This function loops through all .wav files in the clean input directory
+%   and adds each noise file from the noise directory at the specified SNR.
+%   Each resulting noisy file is saved in the output directory with a
+%   descriptive filename.
+%
+%   Inputs:
+%       cleanInputDir    - String, path to folder containing clean .wav files
+%       noiseDir         - String, path to folder containing noise .wav files
+%       noisedOutputDir  - String, path where the noisy files will be saved
+%
+%   Optional Name-Value Arguments (inside `options`):
+%       snr_dB           - Numeric, desired SNR in decibels (default: 10)
+%       clear            - Boolean, whether to clear the output directory before saving (default: true)
+%
+%   Notes:
+%       - Output filenames are formatted as <cleanName>_<noiseName>_<SNR>dB.wav
+%       - Output directory will be created if it doesn't exist
+%       - Requires `generateNoisyFile` to be in the path
+
     arguments
         cleanInputDir
         noiseDir
