@@ -1,10 +1,22 @@
 % This file has 2 functions: One function to process one file, another function to process an entire directory
 %%
-function denoisedAudioArray = denoiseSpeechDir(model, noisyInputDir, outputDir)
-    % Get all .wav files in the directory
+function denoisedAudioArray = denoiseSpeechDir(model, noisyInputDir, denoisedOutputDir, options)
+
+    arguments
+        model
+        noisyInputDir
+        denoisedOutputDir
+        options.clear = 1
+    end
+    % Get all .wav files in the input directory
     fileList = dir(fullfile(noisyInputDir, '*.wav'));
 
-    % Extract numeric part from each filename
+    % Clear output directory
+    if options.clear
+        delete(denoisedOutputDir + "/*");
+    end
+
+    % Extract numeric part from each filename ***FIX***
     fileNums = arrayfun(@(f) sscanf(f.name, '%d'), fileList);
 
     % Sort files by numeric value in ascending order
@@ -17,7 +29,7 @@ function denoisedAudioArray = denoiseSpeechDir(model, noisyInputDir, outputDir)
     % Denoise each file in sorted order
     for i = 1:numFiles
         inputFile = fullfile(noisyInputDir, sortedFiles(i).name);
-        denoisedAudioArray{i} = denoiseSpeechFile(model, inputFile, outputDir);
+        denoisedAudioArray{i} = denoiseSpeechFile(model, inputFile, denoisedOutputDir);
     end
 end
 

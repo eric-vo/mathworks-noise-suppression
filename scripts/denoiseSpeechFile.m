@@ -1,4 +1,4 @@
-function denoisedAudio = denoiseSpeechFile(model, noisyInput, outputDir)
+function denoisedAudio = denoiseSpeechFile(model, noisyInput, denoisedOutputDir)
     % Load a noisy speech audio file
     [noisyAudio, fs] = audioread(noisyInput);
     % soundsc(noisyAudio)
@@ -69,7 +69,7 @@ function denoisedAudio = denoiseSpeechFile(model, noisyInput, outputDir)
     % Save or play the result
     [~, name, ~] = fileparts(noisyInput);
     outputName = strcat(name, '_dn.wav');
-    outputPath = fullfile(outputDir, outputName);
+    outputPath = fullfile(denoisedOutputDir, outputName);
     audiowrite(outputPath, denoisedAudio, fs);
     % sound(denoisedAudio, fs);
 end
