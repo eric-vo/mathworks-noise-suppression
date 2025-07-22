@@ -1,2 +1,4 @@
 *.asv
-*.DS_Store 
+*.DS_Store
+data/train/clean_trainset_28spk_wav/*.wav
+data/train/noisy_trainset_28spk_wav/*.wav 

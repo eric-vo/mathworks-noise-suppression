@@ -1,4 +1,4 @@
-function denoisedAudio = denoiseSpeechFile(noisyInput, outputDir)
+function denoisedAudio = denoiseSpeechFile(model, noisyInput, outputDir)
     % Load a noisy speech audio file
     [noisyAudio, fs] = audioread(noisyInput);
     % soundsc(noisyAudio)
@@ -21,10 +21,16 @@ function denoisedAudio = denoiseSpeechFile(noisyInput, outputDir)
     % Load a denoising network
     
     % s = load("models/denoiseNetFullyConnected.mat");
-    % denoiseNet = s.denoiseNetFullyConnected; % For original pre-trained model
+   
     
-    s = load("models/denoiseNet_FineTuned_VBD.mat");
-    denoiseNet = s.netFineTuned; % For fine-tuned model
+    s = load(model);
+    [~, name, ~] = fileparts(model);
+    if name == "denoiseNetFullyConnected" 
+         denoiseNet = s.denoiseNetFullyConnected; % For original pre-trained model
+    else
+        denoiseNet = s.netFineTuned; % For fine-tuned model
+    end
+
     noisyMean = s.noisyMean;
     noisyStd = s.noisyStd;
     cleanMean = s.cleanMean;
