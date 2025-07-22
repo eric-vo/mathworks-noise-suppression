@@ -1,3 +1,21 @@
+%% evaluate_correlation.m
+% Evaluate correlation between clean and denoised speech audio files.
+%
+% This script:
+%   - Loops over a set of clean audio files and corresponding denoised versions
+%   - Resamples all files to 8 kHz (if needed)
+%   - Computes correlation between each clean-denoised pair using calculateAudioError
+%   - Prints individual and average correlation scores
+%
+% Requirements:
+%   - cleanDir: folder with clean reference .wav files named as <index>.wav (e.g., 1.wav, 2.wav, ...)
+%   - denoisedDir: folder with denoised .wav files named as <index>_<noiseType>_<snr>.wav
+%   - calculateAudioError must be available on the MATLAB path
+%
+% Example:
+%   Run this script after denoising to check how well the denoised output correlates
+%   with the original clean speech signals.
+
 % Set root paths and parameters
 cleanDir = 'data/test/gabrielSamples/clean';
 denoisedDir = 'data/test/gabrielSamples/output_wav';
