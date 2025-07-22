@@ -1,12 +1,28 @@
 function errorMetrics = calculateAudioError(cleanAudio, denoisedAudio)
-% CALCULATEAUDIOERROR Calculate various error metrics between clean and denoised audio
-% 
-% Input:
-%   cleanAudio - Original clean audio signal
-%   denoisedAudio - Denoised audio signal
-% 
-% Output:
-%   errorMetrics - Structure containing various error metrics
+% CALCULATEAUDIOERROR Calculate multiple error metrics between clean and denoised audio signals
+%
+%   errorMetrics = calculateAudioError(cleanAudio, denoisedAudio)
+%
+%   Computes a set of common audio quality metrics to evaluate how close a denoised
+%   signal is to a clean reference signal. Assumes both inputs are mono and aligned in time.
+%
+%   Inputs:
+%       cleanAudio     - Vector of clean/reference audio samples
+%       denoisedAudio  - Vector of denoised audio samples to compare
+%
+%   Output:
+%       errorMetrics   - Struct containing:
+%           .RMSE        - Root Mean Square Error
+%           .MSE         - Mean Squared Error
+%           .SNR_dB      - Signal-to-Noise Ratio in decibels
+%           .NRMSE       - Normalized RMSE (by RMS of clean audio)
+%           .PSNR_dB     - Peak Signal-to-Noise Ratio in dB
+%           .MAE         - Mean Absolute Error
+%           .Correlation - Pearson correlation coefficient between signals
+%
+%   Notes:
+%       - The function truncates the longer signal if inputs are not the same length.
+%       - It also prints the metrics to the console.
 
     % Ensure both signals have the same length
     minLength = min(length(cleanAudio), length(denoisedAudio));
