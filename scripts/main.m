@@ -2,7 +2,7 @@
 model = "models/denoiseNetFullyConnected.mat";
 cleanDir = "data/train/clean_trainset_wav";
 noisyDir = "data/train/noisy_trainset_wav";
-outputPath = "models/denoiseNetTest.mat";
+outputPath = "models/denoiseNet_FineTuned_VBD.mat";
 
 % train(model, cleanDir, noisyDir, outputPath);
 %%
@@ -13,22 +13,20 @@ noisyOutputDir = "data/test/gabrielSamples/noisy8Khz";
 generateNoisyDir(cleanOriginalDir, noiseDir, noisyOutputDir, snr_dB=5) %[output:54561ae3]
 %%
 model = "models/denoiseNet_FineTuned_VBD.mat";
-model2 = "models/denoiseNetTest.mat";
 noisyInputDir = "data/test/gabrielSamples/noisy8Khz";
 denoisedOutputDir = "data/test/gabrielSamples/output_wav";
 
-denoisedAudioArray = denoiseSpeechDir(model2, noisyInputDir, denoisedOutputDir);
+denoisedAudioArray = denoiseSpeechDir(model, noisyInputDir, denoisedOutputDir);
 %%
 [noiseReductionRatios, avgNoiseReductionRatio] = calculateNoiseReductionRatio(denoisedAudioArray, cleanOriginalDir, noisyOutputDir, 5); %[output:35970cb6]
 disp(noiseReductionRatios) %[output:0e68fc7b]
 fprintf('Average noise reduction ratio: %.6f\n', avgNoiseReductionRatio); %[output:2f01be5c]
 cleanOriginalDir = "data/test/datasetSamples/clean_testset_wav";
 model = "models/denoiseNet_FineTuned_VBD.mat";
-model2 = "models/denoiseNetTest.mat";
 noisyInputDir = "data/test/datasetSamples/noisy_testset_wav";
 denoisedOutputDir = "data/test/datasetSamples/output_wav";
 
-denoisedAudioArray = denoiseSpeechDir(model2, noisyInputDir, denoisedOutputDir);
+denoisedAudioArray = denoiseSpeechDir(model, noisyInputDir, denoisedOutputDir);
 [noiseReductionRatios, avgNoiseReductionRatio] = calculateNoiseReductionRatio(denoisedAudioArray, cleanOriginalDir, noisyInputDir); %[output:56b2b7a8]
 disp(noiseReductionRatios) %[output:12c7ec3c]
 fprintf('Average noise reduction ratio: %.6f\n', avgNoiseReductionRatio); %[output:8171191c]
