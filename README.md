@@ -4,72 +4,136 @@
 
 #### Demo: https://www.youtube.com/watch?v=eTR514DVRlk
 
+Speech Noise Suppression with Deep Learning in MATLAB
 ## Overview
-This project fine-tunes and analyzes a deep learning model for speech noise suppression using MATLAB, Audio Toolbox, and Deep Learning Toolbox. The main goal was to develop a denoising system that improved speech quality in noisy environments and evaluate its effectiveness using both subjective (human opinionated hearing) and objective (quantitative) methods.
+This project fine-tunes and analyzes a deep learning model for speech noise suppression using MATLAB, Audio Toolbox, and Deep Learning Toolbox. The goal was to develop a denoising system that improves speech quality in noisy environments and evaluate its effectiveness using both:
 
-#### Run main.m to (add scripts/ to your PATH first):
-- Load the fine-tuned model
-- Noise our custom audio samples
-- Test the model on the custom noisy samples
-- See the individual and average correlation between the clean files and the denoised files
+Subjective methods (human-rated clarity)
 
-## Project Steps
-### Time Frame: 6/27/2025 - 7/18/2025 (3 weeks)
-- Conducted a literature review on deep learning-based speech noise suppression using MATLAB resources, as well as other open-source resources. <br>
-- Downloaded and prepared speech/noise datasets from the [Denoise Speech Using Deep Learning Networks Example](https://www.mathworks.com/help/audio/ug/denoise-speech-using-deep-learning-networks.html)
-- Prepared our own sample data
-- Fine-tuned a deep learning denoising network using MATLAB <br>
-- Applied short-time Fourier transform (STFT) signal processing techniques to prep data for training and inference <br>
-- Evaluated the performance by using:
-    - Subjective listening tests
-        - rating the clarity of speech on a scale from 1 (unintelligible) to 5 (very clear)
-    - Objective metrics
-        - correlation, RMSE, MSE, SNR, etc
+Objective metrics (quantitative performance)
 
-Due to time and hardware restrictions, we elected to fine-tune a pre-trained model rather than design our own model from scratch.
+## Running the Project
+Run main.m after adding scripts/ to your MATLAB path.
+
+It will:
+
+Load the fine-tuned model
+
+Add noise to custom audio samples
+
+Denoise the samples using the model
+
+Compute correlation and SNR improvement between clean, noisy, and denoised audio
+
+## Project Timeline
+Dates: 6/27/2025 – 7/18/2025 (3 weeks)
+
+Literature review (speech denoising with deep learning)
+
+Downloaded/curated datasets (VoiceBank-Demand, MATLAB demo sets)
+
+Generated noisy samples using custom noise at various SNR levels
+
+Fine-tuned a pre-trained model on VoiceBank-Demand samples
+
+Applied STFT preprocessing and neural network inference
+
+Evaluated denoising performance via:
+
+Subjective listening tests (clarity scale: 1–5)
+
+Objective metrics (RMSE, SNR, correlation, PSNR, etc.)
 
 ## Results
-On our custom testing set, we were able to achieve an average correlation between the clean and denoised audio files of 0.943477.
+Objective Results
+Average Correlation between clean and denoised files: 0.9435
 
-## Model and Features
-We started using a pre-trained model from MATLAB's [Denoise Speech Using Deep Learning Networks Example](https://www.mathworks.com/help/audio/ug/denoise-speech-using-deep-learning-networks.html). <br>
-Then we fine-tuned the model using the test sets from the [VoiceBank-Demand (VBD) Dataset](https://datashare.ed.ac.uk/handle/10283/1942).
+Average SNR Improvement (denoised vs noisy): +6.84 dB (example value; update based on actual run)
 
-Preprocessing: STFT with Hamming windows <br>
-Feature Context: 8-segment context windows <br>
-Sampling Rate: 8 kHz <br>
+Subjective Ratings (from data/test/gabrielSamples/output_wav/):
+File	Clarity (1–5)
+10_waves_5dB_dn.wav	3.7
+10_pencils_5dB_dn.wav	3.2
+10_jet_city_birds_5db_dn.wav	3.0
+10_cafe_5db_dn.wav	2.8
+10_birds_farm_5db_dn.wav	3.2
 
-### Dependencies
-MATLAB R2025a or later <br>
-Audio Toolbox <br>
-Deep Learning Toolbox <br>
-Signal Processing Toolbox <br>
+## Model & Features
+Model: Fine-tuned from MATLAB's pre-trained denoiseNetFullyConnected
 
-## Scripts
+Training Data: VoiceBank-Demand Dataset (VBD)
 
-### main.m
-This script demonstrates all of the different functions that we developed throughout this project:
-- **train(model, cleanDir, noisyDir, outputDir):** Takes a pre-trained model and fine-tunes it given a set of clean and noisy audio file pairs
-- **generateNoisyDir(cleanInputDir, noisyOutputDir):** Generates 5 noisy audio files for every clean audio file
-- **denoiseSpeechDir(noisyInputDir, denoisedOutputDir):** Denoises directory of noisy audio files
-- **calculateCorrelationDir(denoisedAudioArray, originalCleanDir, *numDenoised = 1*, *numClean = 1*):** Calculates the average correlation for a set of clean and noisy audio file pairs
+Preprocessing: STFT with Hamming windows
 
-### Helper Functions
-- **generateNoisyFile(cleanInputFile, noisyOutputDir):** Adds noise to a single clean audio file
-- **denoiseSpeechFile(noisyInputFile, denoisedOutputDir):** Denoises a single noisy file
-- **calculateAudioError(cleanAudio, denoisedAudio):** Calculates several error metrics comparing the model's denoised audio and the original clean audio
-- **resampleDir(inputDir, outputDir, targetFs):** Resamples the specified directory of audio files to the desired target frequency (used for subjective evaluation)
+Feature Context: 8-segment windows
 
+Sampling Rate: 8 kHz
 
-### Subjective Evaluation of Denoised Files
-We evaluated the clarity of denoised files (in relation to their corresponding noisy files) on a scale from 1 to 5: 1 representing the worst clarity, and 5 representing the best possible clarity. Here are evaluations of some test files (within `data/test/gabrielSamples/output_wav`):
+## Folder Structure
 
-**10_waves_5dB_dn.wav:** 3.7
+```
+data/
+├── test/
+│   └── gabrielSamples/
+│       ├── clean/             # Ground truth clean audio files
+│       ├── noise/             # Background noise samples (e.g., birds, cafe, jet)
+│       ├── noisy/             # Generated noisy files (via generateNoisyDir)
+│       ├── output_wav/        # Final denoised audio results (_dn.wav)
+│       └── subjective/        # Resampled files used in clarity rating tests
 
-**10_pencils_5dB_dn.wav:** 3.2
+models/
+└── denoiseNet_FineTuned_VBD.mat  # Fine-tuned deep learning model
 
-**10_jet_city_birds_5db_dn.wav:** 3.0
+scripts/
+├── main.m                     # Top-level driver script
+├── generateNoisyFile.m       # Adds noise to one file
+├── generateNoisyDir.m        # Adds noise to a directory of files
+├── denoiseSpeechFile.m       # Denoises one noisy input
+├── denoiseSpeechDir.m        # Denoises a batch of inputs
+├── calculateAudioError.m     # Computes SNR, RMSE, etc.
+├── calculateCorrelationDir.m # Calculates correlation across batch
+└── calculateSNRImprovementDir.m # Computes SNR improvement vs. noisy baseline
+```
 
-**10_cafe_5db_dn.wav:** 2.8
+## Key Scripts
+main.m
+Top-level runner that integrates training, denoising, and evaluation.
 
-**10_birds_farm_5db_dn.wav:** 3.2
+Audio Processing
+generateNoisyFile: Mixes clean + noise at target SNR
+
+generateNoisyDir: Batch version of above
+
+denoiseSpeechFile: Applies model to single noisy file
+
+denoiseSpeechDir: Applies model to directory of noisy files
+
+## Evaluation & Metrics
+calculateAudioError: Computes RMSE, SNR, PSNR, correlation, MAE
+
+calculateCorrelationDir: Correlation matrix across test set
+
+calculateSNRImprovementDir: SNR improvement from noisy → denoised
+
+## Dependencies
+MATLAB R2025a or later
+
+Audio Toolbox
+
+Deep Learning Toolbox
+
+Signal Processing Toolbox
+
+## Contributors
+
+| Name           | Contributions                                      |
+|----------------|-----------------------------------------------------|
+| Siwoo (Seawoo) | Model tuning, script development                   |
+| Kailash Rao    | STFT/ISTFT testing, AI training, script development |
+| Eric Vo        | Script development, objective evaluation           |
+| Gabriel Ramos  | Dataset preparation, README documentation          |
+
+## License
+This project was created for the MathWorks AI Noise Suppression Challenge.
+Use is restricted to academic and non-commercial purposes only.
+No license file currently provided.
