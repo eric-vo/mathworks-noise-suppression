@@ -1,4 +1,4 @@
-function [noiseReductionRatios, avgNoiseReductionRatio] = calculateNoiseReductionRatio(denoisedAudioArray, cleanOriginalDir, noisyOriginalDir, numDenoised, numClean)
+function [noiseReductionRatios, avgNoiseReductionRatio] = calculateNoiseReductionRatio(denoisedAudioArray, cleanOriginalDir, noisyOriginalDir, numDenoised)
 % calculateNoiseReductionRatio  Computes noise reduction ratios of denoised over noisy audio.
 %
 %   [noiseReductionRatios, avgNoiseReductionRatio] = calculateNoiseReductionRatio(...)
@@ -22,13 +22,13 @@ function [noiseReductionRatios, avgNoiseReductionRatio] = calculateNoiseReductio
         cleanOriginalDir
         noisyOriginalDir
         numDenoised = 1
-        numClean = 1
     end
 
     targetFs = 8000;
 
     % === Sort clean files ===
     cleanFiles = dir(fullfile(cleanOriginalDir, '*.wav'));
+    numClean = length(cleanFiles);
     cleanNames = {cleanFiles.name};
     [~, sortIdx] = sort(cleanNames);
     sortedCleanFiles = cleanFiles(sortIdx);
