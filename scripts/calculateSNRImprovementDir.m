@@ -1,0 +1,109 @@
+function [snrImprovements, avgImprovement] = calculateSNRImprovementDir(denoisedAudioArray, cleanOriginalDir, noisyOriginalDir, numDenoised, numClean)
+% calculateSNRImprovementDir  Computes SNR improvement of denoised over noisy audio.
+%
+%   [snrImprovements, avgImprovement] = calculateSNRImprovementDir(...)
+%
+%   For each clean file and corresponding denoised version, computes:
+%       SNR_improvement = SNR_denoised - SNR_noisy
+%
+%   Inputs:
+%       denoisedAudioArray - Cell array of denoised audio signals
+%       cleanOriginalDir   - Directory with clean .wav files (e.g., "10.wav")
+%       noisyOriginalDir   - Directory with noisy .wav files (e.g., "noisy_10.wav")
+%       numDenoised        - Number of denoised/noisy versions per clean file
+%       numClean           - Number of clean files to compare
+%
+%   Outputs:
+%       snrImprovements    - Matrix (numClean x numDenoised) of SNR improvements in dB
+%       avgImprovement     - Scalar average SNR improvement (in dB)
+
+    arguments
+        denoisedAudioArray
+        cleanOriginalDir
+        noisyOriginalDir
+        numDenoised = 1
+        numClean = 1
+    end
+
+    targetFs = 8000;
+
+    % === Sort clean files ===
+    cleanFiles = dir(fullfile(cleanOriginalDir, '*.wav'));
+    cleanNames = {cleanFiles.name};
+    [~, sortIdx] = sort(cleanNames);
+    sortedCleanFiles = cleanFiles(sortIdx);
+    sortedCleanNums = (1:length(sortedCleanFiles));  % Just use 1-based indexing if names aren't numeric
+
+    % === Sort noisy files ===
+    noisyFiles = dir(fullfile(noisyOriginalDir, '*.wav'));
+    noisyNames = {noisyFiles.name};
+    [~, noisySortIdx] = sort(noisyNames);
+    sortedNoisyFiles = noisyFiles(noisySortIdx);
+
+    % === Output matrix ===
+    snrImprovements = zeros(numClean, numDenoised);
+
+    for i = 1:numClean
+        cleanPath = fullfile(cleanOriginalDir, sortedCleanFiles(i).name);
+        [cleanAudio, cleanFs] = audioread(cleanPath);
+        if cleanFs ~= targetFs
+            cleanAudio = resample(cleanAudio, targetFs, cleanFs);
+        end
+
+        for j = 1:numDenoised
+            idx = (i - 1) * numDenoised + j;
+        
+            % === Load denoised audio ===
+            denoisedAudio = denoisedAudioArray{idx};
+            if size(denoisedAudio, 2) > 1
+                denoisedAudio = mean(denoisedAudio, 2);
+            end
+        
+            % === Load corresponding noisy audio ===
+            if idx > length(sortedNoisyFiles)
+                warning('Missing noisy file for clean %s, version %d. Skipping.', sortedCleanFiles(i).name, j);
+                snrImprovements(i, j) = NaN;
+                continue;
+            end
+        
+            noisyFileName = sortedNoisyFiles(idx).name;
+            noisyPath = fullfile(noisyOriginalDir, noisyFileName);
+            [noisyAudio, noisyFs] = audioread(noisyPath);
+            if noisyFs ~= targetFs
+                noisyAudio = resample(noisyAudio, targetFs, noisyFs);
+            end
+            if size(noisyAudio, 2) > 1
+                noisyAudio = mean(noisyAudio, 2);
+            end
+        
+            % === Debugging Info ===
+            fprintf('\n--- Debug Info (i=%d, j=%d, idx=%d) ---\n', i, j, idx);
+            fprintf('Clean file      : %s\n', sortedCleanFiles(i).name);
+            fprintf('Noisy file      : %s\n', noisyFileName);
+            fprintf('Denoised index  : %d (from denoisedAudioArray)\n', idx);
+            fprintf('Clean length    : %d samples\n', length(cleanAudio));
+            fprintf('Noisy length    : %d samples\n', length(noisyAudio));
+            fprintf('Denoised length : %d samples\n', length(denoisedAudio));
+            fprintf('-----------------------------\n');
+        
+            % === Compute SNRs ===
+            denoisedMetrics = calculateAudioError(cleanAudio, denoisedAudio);
+            noisyMetrics = calculateAudioError(cleanAudio, noisyAudio);
+        
+            snrImprovement = denoisedMetrics.SNR_dB - noisyMetrics.SNR_dB;
+            snrImprovements(i, j) = snrImprovement;
+        end
+
+    end
+
+    % === Report SNR improvements ===
+    fprintf('\n');
+    for i = 1:numClean
+        fprintf('SNR improvements for clean file %d: ', sortedCleanNums(i));
+        fprintf('%.2f dB ', snrImprovements(i, :));
+        fprintf('\n');
+    end
+
+    avgImprovement = mean(snrImprovements(~isnan(snrImprovements)), 'all');
+    fprintf('Average SNR improvement across all files: %.2f dB\n', avgImprovement);
+end

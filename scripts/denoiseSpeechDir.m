@@ -39,11 +39,9 @@ function denoisedAudioArray = denoiseSpeechDir(model, noisyInputDir, denoisedOut
         delete(denoisedOutputDir + "/*");
     end
 
-    % Extract numeric part from each filename ***FIX***
-    fileNums = arrayfun(@(f) sscanf(f.name, '%d'), fileList);
-
-    % Sort files by numeric value in ascending order
-    [~, sortIdx] = sort(fileNums, 'ascend');
+    % Sort files by full filename (alphabetically)
+    fileNames = {fileList.name};
+    [~, sortIdx] = sort(fileNames);
     sortedFiles = fileList(sortIdx);
 
     numFiles = length(sortedFiles);
