@@ -1,5 +1,3 @@
-% This file has 2 functions: One function to process one file, another function to process an entire directory
-%%
 function denoisedAudioArray = denoiseSpeechDir(model, noisyInputDir, denoisedOutputDir, options)
 % denoiseSpeechDir  Denoises all .wav files in a directory using a deep learning model.
 %
