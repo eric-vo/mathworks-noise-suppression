@@ -1,5 +1,5 @@
 function [noiseReductionRatios, avgNoiseReductionRatio] = calculateNoiseReductionRatio(denoisedAudioArray, cleanOriginalDir, noisyOriginalDir, numDenoised, numClean)
-% calculateSNRImprovementDir  Computes SNR improvement of denoised over noisy audio.
+% calculateNoiseReductionRatio  Computes noise reduction ratios of denoised over noisy audio.
 %
 %   [noiseReductionRatios, avgNoiseReductionRatio] = calculateNoiseReductionRatio(...)
 %
@@ -86,10 +86,9 @@ function [noiseReductionRatios, avgNoiseReductionRatio] = calculateNoiseReductio
             fprintf('Denoised length : %d samples\n', length(denoisedAudio));
             fprintf('-----------------------------\n');
         
-            % === Compute SNRs ===
+            % === Compute Ratios ===
             denoisedMetrics = calculateAudioError(cleanAudio, denoisedAudio);
-            noisyMetrics = calculateAudioError(cleanAudio, noisyAudio);
-        
+            noisyMetrics = calculateAudioError(cleanAudio, noisyAudio);   
             noiseReductionRatio = (noisyMetrics.MSE - denoisedMetrics.MSE) / noisyMetrics.MSE;
             noiseReductionRatios(i, j) = noiseReductionRatio;
         end
