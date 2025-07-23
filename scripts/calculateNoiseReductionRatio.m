@@ -1,21 +1,21 @@
-function [snrImprovements, avgImprovement] = calculateSNRImprovementDir(denoisedAudioArray, cleanOriginalDir, noisyOriginalDir, numDenoised, numClean)
+function [noiseReductionRatios, avgNoiseReductionRatio] = calculateNoiseReductionRatio(denoisedAudioArray, cleanOriginalDir, noisyOriginalDir, numDenoised, numClean)
 % calculateSNRImprovementDir  Computes SNR improvement of denoised over noisy audio.
 %
-%   [snrImprovements, avgImprovement] = calculateSNRImprovementDir(...)
+%   [noiseReductionRatios, avgNoiseReductionRatio] = calculateNoiseReductionRatio(...)
 %
 %   For each clean file and corresponding denoised version, computes:
-%       SNR_improvement = SNR_denoised - SNR_noisy
+%       noiseReductionRatio = (noisyMSE - denoisedMSE) / noisyMSE
 %
 %   Inputs:
 %       denoisedAudioArray - Cell array of denoised audio signals
 %       cleanOriginalDir   - Directory with clean .wav files (e.g., "10.wav")
-%       noisyOriginalDir   - Directory with noisy .wav files (e.g., "noisy_10.wav")
+%       noisyOriginalDir   - Directory with noisy .wav files (e.g., "10_<x>.wav")
 %       numDenoised        - Number of denoised/noisy versions per clean file
 %       numClean           - Number of clean files to compare
 %
 %   Outputs:
-%       snrImprovements    - Matrix (numClean x numDenoised) of SNR improvements in dB
-%       avgImprovement     - Scalar average SNR improvement (in dB)
+%       noiseReductionRatios    - Matrix (numClean x numDenoised) of noise reduction ratios
+%       avgImprovement     - Average noise reduction ratio
 
     arguments
         denoisedAudioArray
@@ -41,7 +41,7 @@ function [snrImprovements, avgImprovement] = calculateSNRImprovementDir(denoised
     sortedNoisyFiles = noisyFiles(noisySortIdx);
 
     % === Output matrix ===
-    snrImprovements = zeros(numClean, numDenoised);
+    noiseReductionRatios = zeros(numClean, numDenoised);
 
     for i = 1:numClean
         cleanPath = fullfile(cleanOriginalDir, sortedCleanFiles(i).name);
@@ -62,7 +62,7 @@ function [snrImprovements, avgImprovement] = calculateSNRImprovementDir(denoised
             % === Load corresponding noisy audio ===
             if idx > length(sortedNoisyFiles)
                 warning('Missing noisy file for clean %s, version %d. Skipping.', sortedCleanFiles(i).name, j);
-                snrImprovements(i, j) = NaN;
+                noiseReductionRatios(i, j) = NaN;
                 continue;
             end
         
@@ -90,20 +90,20 @@ function [snrImprovements, avgImprovement] = calculateSNRImprovementDir(denoised
             denoisedMetrics = calculateAudioError(cleanAudio, denoisedAudio);
             noisyMetrics = calculateAudioError(cleanAudio, noisyAudio);
         
-            snrImprovement = denoisedMetrics.SNR_dB - noisyMetrics.SNR_dB;
-            snrImprovements(i, j) = snrImprovement;
+            noiseReductionRatio = (noisyMetrics.MSE - denoisedMetrics.MSE) / noisyMetrics.MSE;
+            noiseReductionRatios(i, j) = noiseReductionRatio;
         end
 
     end
 
-    % === Report SNR improvements ===
+    % === Report noise reduction ratios ===
     fprintf('\n');
     for i = 1:numClean
-        fprintf('SNR improvements for clean file %d: ', sortedCleanNums(i));
-        fprintf('%.2f dB ', snrImprovements(i, :));
+        fprintf('Noise reduction ratio improvements for clean file %d: ', sortedCleanNums(i));
+        fprintf('%.2f ', noiseReductionRatios(i, :));
         fprintf('\n');
     end
 
-    avgImprovement = mean(snrImprovements(~isnan(snrImprovements)), 'all');
-    fprintf('Average SNR improvement across all files: %.2f dB\n', avgImprovement);
+    avgNoiseReductionRatio = mean(noiseReductionRatios(~isnan(noiseReductionRatios)), 'all');
+    fprintf('Average noise reduction ratio across all files: %.2f\n', avgNoiseReductionRatio);
 end
