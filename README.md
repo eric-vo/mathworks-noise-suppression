@@ -7,7 +7,7 @@
 
 This project fine-tunes and analyzes a deep learning model for speech noise suppression using MATLAB's Audio Toolbox and Deep Learning Toolbox. The goal was to develop a denoising system that improves speech quality in noisy environments and evaluate its effectiveness using both:
 
-- **Subjective methods** – human-rated clarity  
+- **Subjective methods** – listening-based, human-rated clarity  
 - **Objective metrics** – quantitative performance (SNR, RMSE, correlation, etc.)
 
 ## Running the Project Example
