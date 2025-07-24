@@ -1,24 +1,24 @@
-function noisyAudio = generateNoisyFile(clean_path, noise_path, output_path, snr_dB)
+function noisyAudio = generateNoisyFile(cleanPath, noisePath, outputPath, snr_dB)
 % generateNoisyFile  Adds background noise to a clean audio file at a specified SNR.
 %
-%   noisyAudio = generateNoisyFile(clean_path, noise_path, output_path, snr_dB)
+%   noisyAudio = generateNoisyFile(cleanPath, noisePath, outputPath, snr_dB)
 %
 %   Loads a clean speech file and a noise file, scales the noise to achieve
 %   the desired Signal-to-Noise Ratio (SNR), mixes them, normalizes the result,
 %   and writes the noisy audio to the specified output path.
 %
 %   Inputs:
-%       clean_path   - String, path to clean speech .wav file
-%       noise_path   - String, path to noise-only .wav file
-%       output_path  - String, path to save the resulting noisy .wav file
+%       cleanPath   - String, path to clean speech .wav file
+%       noisePath   - String, path to noise-only .wav file
+%       outputPath  - String, path to save the resulting noisy .wav file
 %       snr_dB       - Numeric value, desired SNR in decibels
 %
 %   Output:
 %       noisyAudio   - Vector, resulting noisy audio signal
 
     % Load audio files
-    [clean, fs1] = audioread(clean_path);
-    [noise, fs2] = audioread(noise_path);
+    [clean, fs1] = audioread(cleanPath);
+    [noise, fs2] = audioread(noisePath);
 
     % Convert to mono if stereo
     if size(clean, 2) > 1
@@ -60,5 +60,5 @@ function noisyAudio = generateNoisyFile(clean_path, noise_path, output_path, snr
     end
 
     % Save result
-    audiowrite(output_path, noisyAudio, fs1);
+    audiowrite(outputPath, noisyAudio, fs1);
 end
