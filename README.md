@@ -10,78 +10,6 @@ This project fine-tunes and analyzes a deep learning model for speech noise supp
 - **Subjective methods** – listening-based, human-rated clarity  
 - **Objective metrics** – quantitative performance (noise reduction ratio)
 
-## Running the Project Example
-
-Running main.m will:
-
-- Fine-tune the pre-trained model
-- Add noise to custom audio samples  
-- Denoise multiple samples using the fine-tuned model  
-- Calculate the noise reduction ratio between the noisy and denoised audio
-
-### How to Run `main.m`:
-1. Add `scripts/` to your MATLAB path.
-2. (Optional) To enable initial training of the model, uncomment line 7 in `main.m` (may be resource-intensive).
-3. Run the script. The denoised files will be outputted in `data/test/gabrielSamples/output_wav/` and `data/test/datasetSamples/output_wav/`.
-
-
-## Functions
-
-### Used in `main.m`
-- **`train(model, cleanDir, noisyDir, outputPath, options: useGPU=0)`**
-  - Fine-tunes a denoising neural network using paired clean and noisy audio
-- **`generateNoisyDir(cleanInputDir, noiseDir, noisedOutputDir, options: snr_dB=10, clear=1)`**
-  - Generates 5 noisy audio files for every clean audio file
-- **`denoiseSpeechDir(model, noisyInputDir, denoisedOutputDir, clear=1)`**
-    - Denoises specified directory of noisy audio files
-- **`calculateNoiseReductionRatio(denoisedAudioArray, cleanOriginalDir, noisyOriginalDir, numDenoised=1)`**
-  - Computes noise reduction ratios of denoised over noisy audio
- 
-### Helper Functions
-- **`generateNoisyFile(cleanPath, noisePath, outputPath, snr_dB)`**
-  - Adds background noise to a clean audio file at a specified SNR
-- **`denoiseSpeechFile(model, noisyInput, denoisedOutputDir)`**
-  - Denoises a single noisy file
-- **`calculateAudioError(cleanAudio, denoisedAudio)`**
-  - Calculates several error metrics (RMSE, SNR, PSNR, correlation, MAE) comparing the model's denoised audio and the original clean audio
-- **`resampleDir(inputDir, outputDir, targetFs)`**
-  - Resamples the specified directory of audio files to the desired target frequency (used for subjective evaluation)
-
-
-## Results
-
-**Objective Results**
-
-- **Average Noise Reduction Ratio:** `0.625` for `data/test/gabrielSamples`, `0.732` for `data/test/datasetSamples`
-  - The average reduction ratio specifies the proportion of noise the model removed from the noisy files. Positive values indicate less noisy output, while negative values indicate noisier output.
-  - On average, 62.5% and 73.2% of the noise was removed for `data/test/gabrielSamples` and `data/test/datasetSamples`, respectively.
- 
-- **Individual Noise Reduction Ratios for `data/test/gabrielSamples`:**
-  - <img width="401" height="200" alt="image" src="https://github.com/user-attachments/assets/eec17f84-393d-4bb6-9eaf-68fdeccfe20d" />
-
-
-**Subjective Ratings** (from `data/test/gabrielSamples/output_wav/`):
-
-| File                          | Clarity (1–5) |
-|-------------------------------|---------------|
-| `10_waves_5dB_dn.wav`         | 3.7           |
-| `10_pencils_5dB_dn.wav`       | 3.2           |
-| `10_jet_city_birds_5db_dn.wav`| 4.0           |
-| `10_cafe_5db_dn.wav`          | 3.1           |
-| `10_birds_farm_5db_dn.wav`    | 3.1           |
-
----
-
-## Model & Features
-
-- **Model:** Fine-tuned from MATLAB's pre-trained `denoiseNetFullyConnected`  
-- **Training Data:** VoiceBank-Demand Dataset (VBD)  
-- **Preprocessing:** STFT with Hamming windows  
-- **Feature Context:** 8-segment windows  
-- **Sampling Rate:** 8 kHz  
-
----
-
 ## Folder Structure
 
 ```
@@ -129,16 +57,53 @@ LICENSE                                # Usage restriction notice
 README.md                              # Project documentation
 ```
 
----
+## Running the Project Example
+### Running `main.m` will:
 
-## Dependencies
+- Fine-tune the pre-trained model
+- Add noise to custom audio samples  
+- Denoise multiple samples using the fine-tuned model  
+- Calculate the noise reduction ratio between the noisy and denoised audio
 
+### How to Run `main.m`:
+1. Add `scripts/` to your MATLAB path.
+2. (Optional) To enable initial training of the model, uncomment line 7 in `main.m` (may be resource-intensive).
+3. Run the script. The denoised files will be outputted in `data/test/gabrielSamples/output_wav/` and `data/test/datasetSamples/output_wav/`.
+
+## Functions
+### Used in `main.m`
+- **`train(model, cleanDir, noisyDir, outputPath, options: useGPU=0)`**
+  - Fine-tunes a denoising neural network using paired clean and noisy audio
+- **`generateNoisyDir(cleanInputDir, noiseDir, noisedOutputDir, options: snr_dB=10, clear=1)`**
+  - Generates 5 noisy audio files for every clean audio file
+- **`denoiseSpeechDir(model, noisyInputDir, denoisedOutputDir, clear=1)`**
+    - Denoises specified directory of noisy audio files
+- **`calculateNoiseReductionRatio(denoisedAudioArray, cleanOriginalDir, noisyOriginalDir, numDenoised=1)`**
+  - Computes noise reduction ratios of denoised over noisy audio
+ 
+### Helper Functions
+- **`generateNoisyFile(cleanPath, noisePath, outputPath, snr_dB)`**
+  - Adds background noise to a clean audio file at a specified SNR
+- **`denoiseSpeechFile(model, noisyInput, denoisedOutputDir)`**
+  - Denoises a single noisy file
+- **`calculateAudioError(cleanAudio, denoisedAudio)`**
+  - Calculates several error metrics (RMSE, SNR, PSNR, correlation, MAE) comparing the model's denoised audio and the original clean audio
+- **`resampleDir(inputDir, outputDir, targetFs)`**
+  - Resamples the specified directory of audio files to the desired target frequency (used for subjective evaluation)
+
+## Model & Features
+- **Model:** Fine-tuned from MATLAB's pre-trained `denoiseNetFullyConnected`  
+- **Training Data:** VoiceBank-Demand Dataset (VBD)  
+- **Preprocessing:** STFT with Hamming windows  
+- **Feature Context:** 8-segment windows  
+- **Sampling Rate:** 8 kHz
+
+### Dependencies
 - MATLAB R2025a or later  
 - Audio Toolbox  
 - Deep Learning Toolbox  
 - Signal Processing Toolbox  
 
----
 ## Project Timeline
 
 **Time Frame:** 6/27/2025 – 7/25/2025 (4 weeks)
@@ -151,6 +116,28 @@ README.md                              # Project documentation
 - Evaluated denoising performance via:  
   - Subjective listening tests (clarity scale: 1–5)  
   - Objective metrics (Noise reduction ratio, RMSE, SNR, correlation, PSNR, etc.)
+
+## Results
+
+**Objective Results**
+
+- **Average Noise Reduction Ratio:** `0.625` for `data/test/gabrielSamples`, `0.732` for `data/test/datasetSamples`
+  - The average reduction ratio specifies the proportion of noise the model removed from the noisy files. Positive values indicate less noisy output, while negative values indicate noisier output.
+  - On average, 62.5% and 73.2% of the noise was removed for `data/test/gabrielSamples` and `data/test/datasetSamples`, respectively.
+ 
+- **Individual Noise Reduction Ratios for `data/test/gabrielSamples`:**
+  - <img width="401" height="200" alt="image" src="https://github.com/user-attachments/assets/eec17f84-393d-4bb6-9eaf-68fdeccfe20d" />
+
+
+**Subjective Ratings** (from `data/test/gabrielSamples/output_wav/`):
+
+| File                          | Clarity (1–5) |
+|-------------------------------|---------------|
+| `10_waves_5dB_dn.wav`         | 3.7           |
+| `10_pencils_5dB_dn.wav`       | 3.2           |
+| `10_jet_city_birds_5db_dn.wav`| 4.0           |
+| `10_cafe_5db_dn.wav`          | 3.1           |
+| `10_birds_farm_5db_dn.wav`    | 3.1           |
 
 ## Contributors
 
