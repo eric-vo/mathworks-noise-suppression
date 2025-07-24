@@ -74,7 +74,7 @@ Running main.m will:
 
 ```
 data/
-├── noise/                             # Background noise samples used for mixing (e.g., birds, cafe, jet)
+├── noise/                             # Background noise samples used for mixing
 ├── train/                             # Training dataset
 │   ├── clean_trainset_wav/            # Clean training audio
 │   └── noisy_trainset_wav/            # Noisy training audio
