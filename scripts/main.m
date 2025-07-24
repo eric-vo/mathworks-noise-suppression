@@ -4,7 +4,7 @@ cleanDir = "data/train/clean_trainset_wav";
 noisyDir = "data/train/noisy_trainset_wav";
 outputPath = "models/denoiseNet_FineTuned_VBD.mat";
 
-% train(model, cleanDir, noisyDir, outputPath);
+% train(model, cleanDir, noisyDir, outputPath, useGPU=1);
 %%
 cleanOriginalDir = "data/test/gabrielSamples/clean8Khz";
 noiseDir = "data/noise";
