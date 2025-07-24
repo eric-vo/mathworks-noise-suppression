@@ -1,10 +1,7 @@
 # Speech Noise Suppression with Deep Learning in MATLAB
 ## by Eric Vo, Kailash Rao, Siwoo Chung, Gabriel Ramos
 
-[![Open in MATLAB Online](https://www.mathworks.com/images/responsive/global/open-in-matlab-online.svg)](https://matlab.mathworks.com/open/github/v1?repo=eric-vo/mathworks-ai-challenge&file=scripts/main.m)
-
-**Demo:** https://www.youtube.com/watch?v=eTR514DVRlk
-
+[![Open in MATLAB Online](https://www.mathworks.com/images/responsive/global/open-in-matlab-online.svg)](https://matlab.mathworks.com/open/github/v1?repo=eric-vo/mathworks-noise-suppression&file=scripts/main.m)
 
 ## Overview
 
@@ -13,16 +10,19 @@ This project fine-tunes and analyzes a deep learning model for speech noise supp
 - **Subjective methods** – human-rated clarity  
 - **Objective metrics** – quantitative performance (SNR, RMSE, correlation, etc.)
 
-
 ## Running the Project Example
 
-**Run `main.m` after adding `scripts/` to your MATLAB path.**  
-It will:
+Running main.m will:
 
 - Fine-tune the pre-trained model
 - Add noise to custom audio samples  
 - Denoise multiple samples using the fine-tuned model  
 - Calculate the noise reduction ratio between the noisy and denoised audio
+
+### How to Run `main.m`:
+1. Add `scripts/` to your MATLAB path.
+2. (Optional) To enable initial training of the model, uncomment line 7 in `main.m` (may be resource-intensive)
+3. Run the script. The denoised files will be outputted in `data/test/gabrielSamples/output_wav` and `data/test/datasetSamples/output_wav`.
 
 ## Key Scripts
 
