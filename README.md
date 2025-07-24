@@ -54,6 +54,7 @@ Running main.m will:
 
 - **Average Noise Reduction Ratio:** `0.625` for `data/test/gabrielSamples`, `0.732` for `data/test/datasetSamples`
   - The average reduction ratio specifies the proportion of noise the model removed from the noisy files. Positive values indicate less noisy output, while negative values indicate noisier output.
+  - On average, 62.5% and 73.2% of the noise was removed for `data/test/gabrielSamples` and `data/test/datasetSamples`, respectively.
 
 **Subjective Ratings** (from `data/test/gabrielSamples/output_wav/`):
 
