@@ -58,6 +58,9 @@ README.md                              # Project documentation
 ```
 
 ## Running the Project Example
+
+**Important:** The denoising scripts only work with **.wav** audio files.
+
 ### Running `main.m` will:
 
 - Fine-tune the pre-trained model
