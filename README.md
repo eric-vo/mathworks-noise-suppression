@@ -92,13 +92,15 @@ README.md                              # Project documentation
   - Resamples the specified directory of audio files to the desired target frequency (used for subjective evaluation)
 
 ## Model & Features
-- **Model:** Fine-tuned from MATLAB's pre-trained `denoiseNetFullyConnected`  
-- **Training Data:** VoiceBank-Demand Dataset (VBD)  
+- **Model:** Pre-trained model from MATLAB's [Denoise Speech Using Deep Learning Networks Example](https://www.mathworks.com/help/audio/ug/denoise-speech-using-deep-learning-networks.html)  
+- **Training Data:** Used the [VoiceBank-Demand (VBD) Dataset](https://datashare.ed.ac.uk/handle/10283/1942) to fine-tune pre-trained model  
 - **Preprocessing:** STFT with Hamming windows  
 - **Feature Context:** 8-segment windows  
 - **Sampling Rate:** 8 kHz
 
-### Dependencies
+<Insert Training Image>
+
+## Dependencies
 - MATLAB R2025a or later  
 - Audio Toolbox  
 - Deep Learning Toolbox  
@@ -109,13 +111,19 @@ README.md                              # Project documentation
 **Time Frame:** 6/27/2025 – 7/25/2025 (4 weeks)
 
 - Conducted a literature review on deep learning-based speech noise suppression  
-- Downloaded/curated datasets (VoiceBank-Demand, MATLAB demo sets)  
+- Downloaded and prepared speech/noise datasets from the [Denoise Speech Using Deep Learning Networks Example](https://www.mathworks.com/help/audio/ug/denoise-speech-using-deep-learning-networks.html)
+- Prepared our own clean sample data (gabrielSamples) 
 - Generated noisy samples using custom noise at various SNR levels  
 - Fine-tuned a pre-trained model on VoiceBank-Demand samples  
 - Applied STFT preprocessing and neural network inference  
 - Evaluated denoising performance via:  
   - Subjective listening tests (clarity scale: 1–5)  
   - Objective metrics (Noise reduction ratio, RMSE, SNR, correlation, PSNR, etc.)
+
+### Future Improvements
+Given more time and capable hardware, we would implement the following changes:
+- Develop and train our own Deep Learning Model from scratch using larger datasets
+- Use a validation set in conjunction with the training set while fine-tuning model 
 
 ## Results
 
