@@ -5,43 +5,41 @@
 
 **Demo:** https://www.youtube.com/watch?v=eTR514DVRlk
 
----
 
 ## Overview
 
-This project fine-tunes and analyzes a deep learning model for speech noise suppression using MATLAB, Audio Toolbox, and Deep Learning Toolbox. The goal was to develop a denoising system that improves speech quality in noisy environments and evaluate its effectiveness using both:
+This project fine-tunes and analyzes a deep learning model for speech noise suppression using MATLAB's Audio Toolbox and Deep Learning Toolbox. The goal was to develop a denoising system that improves speech quality in noisy environments and evaluate its effectiveness using both:
 
 - **Subjective methods** – human-rated clarity  
 - **Objective metrics** – quantitative performance (SNR, RMSE, correlation, etc.)
 
----
 
-## Running the Project
+## Running the Project Example
 
 **Run `main.m` after adding `scripts/` to your MATLAB path.**  
 It will:
 
-- Load the fine-tuned model  
+- Fine-tune the pre-trained model
 - Add noise to custom audio samples  
-- Denoise the samples using the model  
-- Compute correlation and SNR improvement between clean, noisy, and denoised audio  
+- Denoise multiple samples using the fine-tuned model  
+- Calculate the noise reduction ratio between the noisy and denoised audio
 
----
+## Key Scripts
 
-## Project Timeline
+**main.m**  
+- Top-level runner that integrates training, denoising, and evaluation.
 
-**Time Frame:** 6/27/2025 – 7/18/2025 (3 weeks)
+**Audio Processing**
+- `generateNoisyFile` – Mixes clean + noise at target SNR  
+- `generateNoisyDir` – Batch version of above  
+- `denoiseSpeechFile` – Applies model to single noisy file  
+- `denoiseSpeechDir` – Applies model to directory of noisy files  
 
-- Conducted a literature review on deep learning-based speech noise suppression  
-- Downloaded/curated datasets (VoiceBank-Demand, MATLAB demo sets)  
-- Generated noisy samples using custom noise at various SNR levels  
-- Fine-tuned a pre-trained model on VoiceBank-Demand samples  
-- Applied STFT preprocessing and neural network inference  
-- Evaluated denoising performance via:  
-  - Subjective listening tests (clarity scale: 1–5)  
-  - Objective metrics (RMSE, SNR, correlation, PSNR, etc.)
+**Evaluation & Metrics**
+- `calculateAudioError` – Computes RMSE, SNR, PSNR, correlation, MAE  
+- `calculateCorrelationDir` – Correlation matrix across test set  
+- `calculateSNRImprovementDir` – SNR improvement from noisy → denoised  
 
----
 
 ## Results
 
@@ -100,24 +98,6 @@ scripts/
 
 ---
 
-## Key Scripts
-
-**main.m**  
-- Top-level runner that integrates training, denoising, and evaluation.
-
-**Audio Processing**
-- `generateNoisyFile` – Mixes clean + noise at target SNR  
-- `generateNoisyDir` – Batch version of above  
-- `denoiseSpeechFile` – Applies model to single noisy file  
-- `denoiseSpeechDir` – Applies model to directory of noisy files  
-
-**Evaluation & Metrics**
-- `calculateAudioError` – Computes RMSE, SNR, PSNR, correlation, MAE  
-- `calculateCorrelationDir` – Correlation matrix across test set  
-- `calculateSNRImprovementDir` – SNR improvement from noisy → denoised  
-
----
-
 ## Dependencies
 
 - MATLAB R2025a or later  
@@ -126,6 +106,18 @@ scripts/
 - Signal Processing Toolbox  
 
 ---
+## Project Timeline
+
+**Time Frame:** 6/27/2025 – 7/25/2025 (4 weeks)
+
+- Conducted a literature review on deep learning-based speech noise suppression  
+- Downloaded/curated datasets (VoiceBank-Demand, MATLAB demo sets)  
+- Generated noisy samples using custom noise at various SNR levels  
+- Fine-tuned a pre-trained model on VoiceBank-Demand samples  
+- Applied STFT preprocessing and neural network inference  
+- Evaluated denoising performance via:  
+  - Subjective listening tests (clarity scale: 1–5)  
+  - Objective metrics (RMSE, SNR, correlation, PSNR, etc.)
 
 ## Contributors
 
