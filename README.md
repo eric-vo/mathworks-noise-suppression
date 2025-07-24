@@ -24,21 +24,28 @@ Running main.m will:
 2. (Optional) To enable initial training of the model, uncomment line 7 in `main.m` (may be resource-intensive).
 3. Run the script. The denoised files will be outputted in `data/test/gabrielSamples/output_wav/` and `data/test/datasetSamples/output_wav/`.
 
-## Key Scripts
 
-**main.m**  
-- Top-level runner that integrates training, denoising, and evaluation.
+## Functions
 
-**Audio Processing**
-- `generateNoisyFile` – Mixes clean + noise at target SNR  
-- `generateNoisyDir` – Batch version of above  
-- `denoiseSpeechFile` – Applies model to single noisy file  
-- `denoiseSpeechDir` – Applies model to directory of noisy files  
-
-**Evaluation & Metrics**
-- `calculateAudioError` – Computes RMSE, SNR, PSNR, correlation, MAE  
-- `calculateCorrelationDir` – Correlation matrix across test set  
-- `calculateSNRImprovementDir` – SNR improvement from noisy → denoised  
+### Used in `main.m`
+- **`train(model, cleanDir, noisyDir, outputPath, options: useGPU=0)`**
+  - Fine-tunes a denoising neural network using paired clean and noisy audio
+- **`generateNoisyDir(cleanInputDir, noiseDir, noisedOutputDir, options: snr_dB=10, clear=1)`**
+  - Generates 5 noisy audio files for every clean audio file
+- **`denoiseSpeechDir(model, noisyInputDir, denoisedOutputDir, clear=1)`**
+    - Denoises specified directory of noisy audio files
+- **`calculateNoiseReductionRatio(denoisedAudioArray, cleanOriginalDir, noisyOriginalDir, numDenoised=1)`**
+  - Computes noise reduction ratios of denoised over noisy audio
+ 
+### Helper Functions
+- **`generateNoisyFile(cleanPath, noisePath, outputPath, snr_dB)`**
+  - Adds background noise to a clean audio file at a specified SNR
+- **`denoiseSpeechFile(model, noisyInput, denoisedOutputDir)`**
+  - Denoises a single noisy file
+- **`calculateAudioError(cleanAudio, denoisedAudio)`**
+  - Calculates several error metrics (RMSE, SNR, PSNR, correlation, MAE) comparing the model's denoised audio and the original clean audio
+- **`resampleDir(inputDir, outputDir, targetFs)`**
+  - Resamples the specified directory of audio files to the desired target frequency (used for subjective evaluation)
 
 
 ## Results
