@@ -52,8 +52,8 @@ Running main.m will:
 
 **Objective Results**
 
-- **Average Correlation:** `0.9435`  
-- **Average SNR Improvement:** `+6.84 dB` *(example value; update with actual)*
+- **Average Noise Reduction Ratio:** `0.625` for `data/test/gabrielSamples`, `0.732` for `data/test/datasetSamples`
+  - The average reduction ratio specifies the proportion of noise the model removed from the noisy files. Positive values indicate less noisy output, while negative values indicate noisier output.
 
 **Subjective Ratings** (from `data/test/gabrielSamples/output_wav/`):
 
@@ -61,9 +61,9 @@ Running main.m will:
 |-------------------------------|---------------|
 | `10_waves_5dB_dn.wav`         | 3.7           |
 | `10_pencils_5dB_dn.wav`       | 3.2           |
-| `10_jet_city_birds_5db_dn.wav`| 3.0           |
-| `10_cafe_5db_dn.wav`          | 2.8           |
-| `10_birds_farm_5db_dn.wav`    | 3.2           |
+| `10_jet_city_birds_5db_dn.wav`| 4.0           |
+| `10_cafe_5db_dn.wav`          | 3.1           |
+| `10_birds_farm_5db_dn.wav`    | 3.1           |
 
 ---
 
