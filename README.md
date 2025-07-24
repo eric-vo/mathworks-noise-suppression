@@ -145,7 +145,7 @@ README.md                              # Project documentation
 - Applied STFT preprocessing and neural network inference  
 - Evaluated denoising performance via:  
   - Subjective listening tests (clarity scale: 1–5)  
-  - Objective metrics (RMSE, SNR, correlation, PSNR, etc.)
+  - Objective metrics (Noise reduction ratio, RMSE, SNR, correlation, PSNR, etc.)
 
 ## Contributors
 
