@@ -74,26 +74,47 @@ Running main.m will:
 
 ```
 data/
+├── noise/                             # Background noise samples used for mixing (e.g., birds, cafe, jet)
+├── train/                             # Training dataset
+│   ├── clean_trainset_wav/            # Clean training audio
+│   └── noisy_trainset_wav/            # Noisy training audio
+├── validate/                          # Validation dataset
+│   ├── clean_validationset_wav/       # Clean validation audio
+│   └── noisy_validationset_wav/       # Noisy validation audio
 ├── test/
-│   └── gabrielSamples/
-│       ├── clean/             # Ground truth clean audio files
-│       ├── noise/             # Background noise samples (e.g., birds, cafe, jet)
-│       ├── noisy/             # Generated noisy files (via generateNoisyDir)
-│       ├── output_wav/        # Final denoised audio results (_dn.wav)
-│       └── subjective/        # Resampled files used in clarity rating tests
+│   ├── simpleTest/                    # Small sample test case
+│   │   ├── noisyInput/                # Input audio with noise
+│   │   └── testOutput/                # Denoised output from simple test
+│   ├── gabrielSamples/                # Gabriel's evaluation samples
+│   │   ├── clean/                     # Original clean speech
+│   │   ├── clean8Khz/                 # Clean speech (8 kHz)
+│   │   ├── noisy8Khz/                 # Noisy input (8 kHz)
+│   │   └── output_wav/                # Denoised output files
+│   └── datasetSamples/                # General test set used for metrics
+│       ├── clean_testset_wav/         # Clean test audio
+│       ├── noisy_testset_wav/         # Noisy test audio
+│       ├── clean_testset_wav_8khz/    # Clean test audio (8 kHz)
+│       ├── noisy_testset_wav_8khz/    # Noisy test audio (8 kHz)
+│       └── output_wav/                # Denoised output files
 
 models/
-└── denoiseNet_FineTuned_VBD.mat  # Fine-tuned deep learning model
+├── denoiseNet_FineTuned_VBD.mat       # Final fine-tuned model
+├── denoiseNet.mat                     # Baseline/alternative model
+└── denoiseNetFullyConnected.mat       # Original pre-trained model
 
 scripts/
-├── main.m                     # Top-level driver script
-├── generateNoisyFile.m       # Adds noise to one file
-├── generateNoisyDir.m        # Adds noise to a directory of files
-├── denoiseSpeechFile.m       # Denoises one noisy input
-├── denoiseSpeechDir.m        # Denoises a batch of inputs
-├── calculateAudioError.m     # Computes SNR, RMSE, etc.
-├── calculateCorrelationDir.m # Calculates correlation across batch
-└── calculateSNRImprovementDir.m # Computes SNR improvement vs. noisy baseline
+├── main.m                             # Top-level script (entry point)
+├── train.m                            # Script to fine-tune the model
+├── generateNoisyFile.m                # Add noise to a single file
+├── generateNoisyDir.m                 # Add noise to a directory of files
+├── denoiseSpeechFile.m                # Denoise a single file using model
+├── denoiseSpeechDir.m                 # Denoise all files in a directory
+├── calculateAudioError.m              # Computes RMSE, SNR, PSNR, etc.
+├── calculateNoiseReductionRatio.m     # Computes noise suppression ratio
+├── resampleDir.m                      # Resamples files for compatibility
+
+LICENSE                                # Usage restriction notice
+README.md                              # Project documentation
 ```
 
 ---
