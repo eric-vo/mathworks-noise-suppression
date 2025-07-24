@@ -121,18 +121,9 @@ scripts/
 
 ## Contributors
 
-| Name           | Contributions                                                           |
-|----------------|-------------------------------------------------------------------------|
-| Siwoo Chung    | Noising algorithm, noising test dataset function documentation          |
-| Kailash Rao    | Model tuning, denoising test dataset, aggregating functions in `main.m` |
-| Eric Vo        | Noise reduction ratio metrics, refactoring functions                    |
-| Gabriel Ramos  | Dataset preparation, README documentation                               |
-
----
-
-## License
-
-This project was created for the **MathWorks AI Noise Suppression Challenge**.  
-Use is restricted to **academic and non-commercial purposes only**.  
-No license file currently provided.
-
+| Name           | Contributions                                                                        | Files Worked On                                                                      |
+|----------------|--------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------|
+| Siwoo Chung    | Noising algorithm, noising test dataset function documentation                       | `main.m`, `generateNoisyFile.m`, `generateNoisyDir.m`                                |
+| Kailash Rao    | Model tuning, denoising test dataset, aggregating functions in `main.m`              | `main.m`, `train.m`, `denoiseSpeechFile.m`, `denoiseSpeechDir.m`                     |
+| Eric Vo        | Noise reduction ratio metrics, refactoring functions                                 | `main.m`, `resampleDir.m`, `calculateNoiseReductionRatio.m`, `calculateAudioError.m` |
+| Gabriel Ramos  | Dataset preparation, README documentation, updates on key requirements and deadlines | `README.md`                                                                          |
