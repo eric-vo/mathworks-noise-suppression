@@ -121,12 +121,12 @@ scripts/
 
 ## Contributors
 
-| Name           | Contributions                                      |
-|----------------|-----------------------------------------------------|
-| Siwoo Chung    | Model tuning, script development                   |
-| Kailash Rao    | STFT/ISTFT testing, AI training, script development |
-| Eric Vo        | Script development, objective evaluation           |
-| Gabriel Ramos  | Dataset preparation, README documentation          |
+| Name           | Contributions                                                           |
+|----------------|-------------------------------------------------------------------------|
+| Siwoo Chung    | Noising algorithm, noising test dataset function documentation          |
+| Kailash Rao    | Model tuning, denoising test dataset, aggregating functions in `main.m` |
+| Eric Vo        | Noise reduction ratio metrics, refactoring functions                    |
+| Gabriel Ramos  | Dataset preparation, README documentation                               |
 
 ---
 
