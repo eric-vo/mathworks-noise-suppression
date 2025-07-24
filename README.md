@@ -22,7 +22,7 @@ Running main.m will:
 ### How to Run `main.m`:
 1. Add `scripts/` to your MATLAB path.
 2. (Optional) To enable initial training of the model, uncomment line 7 in `main.m` (may be resource-intensive).
-3. Run the script. The denoised files will be outputted in `data/test/gabrielSamples/output_wav` and `data/test/datasetSamples/output_wav`.
+3. Run the script. The denoised files will be outputted in `data/test/gabrielSamples/output_wav/` and `data/test/datasetSamples/output_wav/`.
 
 ## Key Scripts
 
