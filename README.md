@@ -53,6 +53,8 @@ scripts/
 ├── calculateNoiseReductionRatio.m     # Computes noise suppression ratio
 ├── resampleDir.m                      # Resamples files for compatibility
 
+media/                                 # Image showing noise reduction ratios for Gabriel's samples
+
 LICENSE                                # Usage restriction notice
 README.md                              # Project documentation
 ```
