@@ -127,7 +127,7 @@ README.md                              # Project documentation
   - Objective metrics (Noise reduction ratio, RMSE, SNR, correlation, PSNR, etc.)
 
 ### Future Improvements
-Given more time and capable hardware, we would implement the following changes:
+Given more time and more capable hardware, we would implement the following improvements:
 - Develop and train our own Deep Learning Model from scratch using larger datasets
 - Use a validation set in conjunction with the training set while fine-tuning model 
 
