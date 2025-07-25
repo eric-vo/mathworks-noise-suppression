@@ -5,7 +5,7 @@
 
 ## Overview
 
-This project fine-tunes and analyzes a deep learning model for speech noise suppression using MATLAB's Audio Toolbox and Deep Learning Toolbox. The goal was to develop a denoising system that improves speech quality in noisy environments and evaluate its effectiveness using both:
+This project is a submission for the [MATLAB and Simulink Challenge Project: Speech Background Noise Suppression with Deep Learning](https://github.com/mathworks/MATLAB-Simulink-Challenge-Project-Hub/tree/main/projects/Speech%20Background%20Noise%20Suppression%20with%20Deep%20Learning). Our project fine-tunes and analyzes a deep learning model for speech noise suppression using MATLAB's Audio Toolbox and Deep Learning Toolbox. The goal was to develop a denoising system that improves speech quality in noisy environments and evaluate its effectiveness using both:
 
 - **Subjective methods** – listening-based, human-rated clarity  
 - **Objective metrics** – quantitative performance (noise reduction ratio)
