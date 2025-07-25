@@ -103,7 +103,8 @@ README.md                              # Project documentation
 - **Feature Context:** 8-segment windows  
 - **Sampling Rate:** 8 kHz
 
-<Insert Training Image>
+![Training](media/trainingModel.png)
+*Insert caption here*
 
 ## Dependencies
 - MATLAB R2025a or later  
@@ -139,7 +140,7 @@ Given more time and capable hardware, we would implement the following changes:
   - On average, 62.5% and 73.2% of the noise was removed for `data/test/gabrielSamples` and `data/test/datasetSamples`, respectively.
  
 - **Individual Noise Reduction Ratios for `data/test/gabrielSamples`:**
-  - <img width="401" height="200" alt="image" src="https://github.com/user-attachments/assets/eec17f84-393d-4bb6-9eaf-68fdeccfe20d" />
+![Results](media/gabrielSamplesNoiseReductionRatios.png)
 
 
 **Subjective Ratings** (from `data/test/gabrielSamples/output_wav/`):
