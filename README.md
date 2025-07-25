@@ -5,10 +5,10 @@
 
 ## Overview
 
-This project is a submission for the [MATLAB and Simulink Challenge Project: Speech Background Noise Suppression with Deep Learning](https://github.com/mathworks/MATLAB-Simulink-Challenge-Project-Hub/tree/main/projects/Speech%20Background%20Noise%20Suppression%20with%20Deep%20Learning). Our project fine-tunes and analyzes a deep learning model for speech noise suppression using MATLAB's Audio Toolbox and Deep Learning Toolbox. The goal was to develop a denoising system that improves speech quality in noisy environments and evaluate its effectiveness using both:
+This project is a submission for the [MATLAB and Simulink Challenge Project: Speech Background Noise Suppression with Deep Learning](https://github.com/mathworks/MATLAB-Simulink-Challenge-Project-Hub/tree/main/projects/Speech%20Background%20Noise%20Suppression%20with%20Deep%20Learning). Our project fine-tunes and analyzes a deep learning model for speech noise suppression using MATLAB's Audio Toolbox and Deep Learning Toolbox. The goal was to develop a denoising system that improves speech quality in noisy environments and to evaluate its effectiveness using both:
 
-- **Subjective methods** – listening-based, human-rated clarity  
-- **Objective metrics** – quantitative performance (noise reduction ratio)
+- **Subjective methods** – listening-based, human-rated clarity
+- **Objective metrics** – quantitative performance (e.g., noise reduction ratio)
 
 ## Folder Structure
 
@@ -81,7 +81,7 @@ README.md                              # Project documentation
 - **`generateNoisyDir(cleanInputDir, noiseDir, noisedOutputDir, options: snr_dB=10, clear=1)`**
   - Generates 5 noisy audio files for every clean audio file
 - **`denoiseSpeechDir(model, noisyInputDir, denoisedOutputDir, clear=1)`**
-    - Denoises specified directory of noisy audio files
+    - Denoises a specified directory of noisy audio files
 - **`calculateNoiseReductionRatio(denoisedAudioArray, cleanOriginalDir, noisyOriginalDir, numDenoised=1)`**
   - Computes noise reduction ratios of denoised over noisy audio
  
@@ -91,7 +91,7 @@ README.md                              # Project documentation
 - **`denoiseSpeechFile(model, noisyInput, denoisedOutputDir)`**
   - Denoises a single noisy file
 - **`calculateAudioError(cleanAudio, denoisedAudio)`**
-  - Calculates several error metrics (RMSE, SNR, PSNR, correlation, MAE) comparing the model's denoised audio and the original clean audio
+  - Calculates several error metrics (RMSE, SNR, PSNR, correlation, MAE) by comparing the model's denoised audio with the original clean audio
 - **`resampleDir(inputDir, outputDir, targetFs)`**
   - Resamples the specified directory of audio files to the desired target frequency (used for subjective evaluation)
 
