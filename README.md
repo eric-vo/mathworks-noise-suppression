@@ -60,7 +60,7 @@ README.md                              # Project documentation
 
 ## Running the Project Example
 
-**Important:** The all functions and scripts only work with **.wav** audio files.
+**Important:** All functions and scripts only work with **.wav** audio files.
 
 ### Running `main.m` will:
 
