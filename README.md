@@ -91,10 +91,11 @@ README.md                              # Project documentation
 - **`denoiseSpeechFile(model, noisyInput, denoisedOutputDir)`**
   - Denoises a single noisy file
 - **`calculateAudioError(cleanAudio, denoisedAudio)`**
-  - Calculates several error metrics (RMSE, SNR, PSNR, correlation, MAE) by comparing the model's denoised audio with the original clean audio
+  - Calculates several error metrics (RMSE, MSE, SNR, NRMSE, PSNR, MAE, correlation) by comparing the model's denoised audio with the original clean audio
 - **`resampleDir(inputDir, outputDir, targetFs)`**
   - Resamples the specified directory of audio files to the desired target frequency (used for subjective evaluation)
 
+*See function docstrings for more details*
 ## Model & Features
 - **Model:** Pre-trained model from MATLAB's [Denoise Speech Using Deep Learning Networks Example](https://www.mathworks.com/help/audio/ug/denoise-speech-using-deep-learning-networks.html)  
 - **Training Data:** Used the [VoiceBank-Demand (VBD) Dataset](https://datashare.ed.ac.uk/handle/10283/1942) to fine-tune pre-trained model  
