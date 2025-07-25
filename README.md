@@ -104,7 +104,7 @@ README.md                              # Project documentation
 - **Sampling Rate:** 8 kHz
 
 ![Training](media/trainingModel.png)
-*Metrics from fine-tuning the pre-trained model. The two graphs display root mean square error (RMSE) and training loss over time.*
+*Metrics from fine-tuning the pre-trained model. The two graphs display the root mean square error (RMSE) and training loss of the model over time.*
 
 ## Dependencies
 - MATLAB R2025a or later  
